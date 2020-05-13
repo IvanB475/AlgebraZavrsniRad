@@ -5,11 +5,18 @@ const passport = require("passport");
 const User = require("./models/user");
 const LocalStrategy = require("passport-local").Strategy;
 
+const usersRoutes = require("./routes/users");
+
+const usersControllers = require("./controllers/users");
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+app.use(usersRoutes);
+app.use(usersControllers);
 
 app.get("/", (req, res) => {
   res.send("Hello");
