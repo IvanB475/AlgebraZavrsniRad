@@ -1,0 +1,22 @@
+{
+  "name": "zavrsni_rad",
+  "version": "1.0.0",
+  "description": "Aplikacija za dopisivanje u stvarnom vremenu",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IvanB475/AlgebraZavrsniRad.git"
+  },
+  "author": "Ivan Beljan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IvanB475/AlgebraZavrsniRad/issues"
+  },
+  "homepage": "https://github.com/IvanB475/AlgebraZavrsniRad#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
