@@ -9,4 +9,9 @@ router.get("/signup", (req, res) => {
 router.get("/login", (req, res) => {
   res.render("users/login", { path: "users/login"});
 })
+
+router.get("/settings", (req, res) => {
+  res.render("users/settings", {path: "users/settings"});
+});
+
 module.exports = router;

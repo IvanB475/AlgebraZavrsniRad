@@ -5,6 +5,7 @@
     <%- include('../partials/navbar.ejs') %>
     <h1>Login</h1>
     <form action="/login" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <label for="username">Korisničko ime</label>
         <input type="text" name="username" id="username">
         <br>

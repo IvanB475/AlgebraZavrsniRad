@@ -6,6 +6,7 @@
     <h1>Hello everyone</h1>
 
     <form action="/logout" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <button type="submit">Logout</button>
     </form>
   </main>

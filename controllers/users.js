@@ -31,6 +31,18 @@ router.post("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
   console.log("successfully logged you out");
+});
+
+router.post('/settings', (req, res, next) => {
+  const update = { email: req.body.email}
+  User.findByIdAndUpdate(req.user._id, update).then(result => {
+    res.render('index/landing', {path: '/'});
+    console.log(result);
+  }).catch(err => {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  })
 })
 
 module.exports = router;
