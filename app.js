@@ -4,11 +4,13 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const User = require("./models/user");
 const LocalStrategy = require("passport-local").Strategy;
+const bodyParser = require('body-parser');
 
 const usersRoutes = require("./routes/users");
 
 const usersControllers = require("./controllers/users");
 
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(passport.initialize());
 app.use(passport.session());
