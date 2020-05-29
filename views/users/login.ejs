@@ -1,6 +1,9 @@
-<body>
-    <h1>Login</h1>
+<%- include('../partials/header.ejs') %> 
+</head>
 
+<body>
+    <%- include('../partials/navbar.ejs') %>
+    <h1>Login</h1>
     <form action="/login" method="POST">
         <label for="username">Korisničko ime</label>
         <input type="text" name="username" id="username">
