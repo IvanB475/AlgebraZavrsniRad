@@ -21,4 +21,10 @@ router.post("/signup", (req, res) => {
   });
 });
 
+router.post("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
+  console.log("successfully logged you out");
+})
+
 module.exports = router;
