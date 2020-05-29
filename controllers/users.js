@@ -21,6 +21,12 @@ router.post("/signup", (req, res) => {
   });
 });
 
+router.post("/login", passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/login"
+}));
+
+
 router.post("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
