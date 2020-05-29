@@ -9,11 +9,16 @@ const usersRoutes = require("./routes/users");
 
 const usersControllers = require("./controllers/users");
 
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+
+app.set('view engine', 'ejs');
+app.set('views', 'views');
 
 app.use(usersRoutes);
 app.use(usersControllers);
@@ -22,7 +27,7 @@ app.get("/", (req, res) => {
   res.send("Hello");
 });
 
-mongoose.connect("mongodb://localhost:27017/salarycalc", {
+mongoose.connect("mongodb://localhost:27017/zavrsnirad", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
