@@ -16,10 +16,12 @@
                     <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
                 </li>
             <% } else { %>
-
+                <li class="main-header__item">
+                        <a class="<%= path === '/settings' ? 'active' : '' %>" href="/settings">Settings</a>
+                </li>
                 <li class="main-header__item">
                     <form action="/logout" method="post">
-                        <input type="hidden" name="_csrf" value="${req.csrfToken()}" />
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button type="submit">Logout</button>
                     </form>
                 </li>
