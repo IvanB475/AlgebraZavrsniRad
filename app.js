@@ -19,7 +19,7 @@ app.use(
 );
 
 const usersRoutes = require("./routes/users");
-
+const indexRoutes = require("./routes/index");
 const usersControllers = require("./controllers/users");
 
 
@@ -47,12 +47,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(usersRoutes);
+app.use(indexRoutes);
 app.use(usersControllers);
 
 
-app.get("/", (req, res) => {
-  res.render("index/landing", { path: "index/landing"});
-});
+
 
 mongoose.connect("mongodb://localhost:27017/zavrsnirad", {
   useNewUrlParser: true,
