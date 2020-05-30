@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const passport = require("passport");
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+const async = require('async');
 
 router.post("/signup", (req, res) => {
   const newUser = new User({
@@ -44,5 +47,108 @@ router.post('/settings', (req, res, next) => {
     return next(error);
   })
 })
+
+router.post('/resetpw', (req,res, next) => {
+  async.waterfall([
+    function(done) {
+      crypto.randomBytes(32, (err, buf) => {
+        let token = buf.toString('hex');
+        done(err,token);
+      });
+    },
+    function(token, done) {
+      User.findOne({ email: req.body.email}, (err, user) => {
+        if(!user) {
+          console.log('error' + ' No account with that email address exists');
+          return res.redirect('/');
+        }
+
+        user.resetPasswordToken = token;
+
+        user.resetPasswordExpires = Date.now() + 3600000;
+
+        user.save(function(err) {
+          done(err, token, user);
+        });
+      });
+    },
+    (token, user, done ) => {
+      let smtpTransport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: 'rubotester@gmail.com',
+          pass: 'rubo54545'
+        }
+      });
+      let mailOptions = {
+        to: user.email,
+        from: 'rubotester@gmail.com',
+        subject: 'Node.js Password Reset',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' + req.headers.host + '/resetpw/' + token + '\n\n' +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      };
+      smtpTransport.sendMail(mailOptions, (err) => {
+        console.log('mail sent');
+        console.log('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+        done(err, 'done');
+      });
+    }
+  ], (err) => {
+    if(err) return next(err);
+    res.redirect('/');
+  })
+})
+
+router.post('/resetpw/:token', (req, res) => {
+  async.waterfall([
+    function(done) {
+      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
+        if (!user) {
+          console.log("nop");
+          return res.redirect('back');
+        }
+        if(req.body.password === req.body.confirm) {
+          user.setPassword(req.body.password, function(err) {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpires = undefined;
+
+            user.save((err) => {
+              req.logIn(user, function(err) {
+                done(err, user);
+              });
+            });
+          })
+        } else {
+            console.log("passwords don't match");
+            return res.redirect('back');
+        }
+      });
+    },
+    function(user, done) {
+      var smtpTransport = nodemailer.createTransport({
+        service: 'Gmail', 
+        auth: {
+          user: 'rubotester@gmail.com',
+          pass: 'rubo54545'
+        }
+      });
+      var mailOptions = {
+        to: user.email,
+        from: 'rubotester@gmail.com',
+        subject: 'Your password has been changed',
+        text: 'Hello,\n\n' +
+          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+        console.log("password has been changed!");
+        done(err);
+      });
+    }
+  ], function(err) {
+    res.redirect('/');
+  });
+});
 
 module.exports = router;

@@ -1,0 +1,16 @@
+<%- include('../partials/header.ejs') %> 
+
+</head>
+<body>
+    <%- include('../partials/navbar.ejs') %>
+    <main>
+        <form action="/resetpw" method="POST">
+            <div class="form-control">
+                <label for="email">E-Mail</label>
+                <input type="email" name="email" id="email">
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit">Reset Password</button>
+        </form>
+    </main>
+</body>

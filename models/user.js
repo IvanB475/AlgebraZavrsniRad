@@ -10,6 +10,8 @@ const userSchema = new Schema({
   password: {
     type: String,
   },
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
   status: {
     type: String,
   },
