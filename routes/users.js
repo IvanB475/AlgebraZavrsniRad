@@ -29,4 +29,11 @@ router.get('/resetpw/:token', (req, res) => {
   })
 });
 
+router.get('/findusers', (req, res) => {
+  const regex = new RegExp(req.query.search, 'gi');
+  User.find({"username": regex}, (err, allUsers) => {
+    res.render('index/landing', { users: allUsers, path: 'index/landing' })
+  })
+})
+
 module.exports = router;

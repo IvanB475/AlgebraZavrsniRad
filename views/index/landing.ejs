@@ -4,7 +4,19 @@
   <%- include('../partials/navbar')%>
   <main>
     <h1>Hello everyone</h1>
-
+    <form action="/findusers" method="GET">
+      <label for="search">Find users</label>
+      <input type="text" name="search" id="search">
+      <input type="submit" value="Search">
+     </form>
+     <% if ( users.length > 0 ) { %> 
+     <h3>Found users</h3>
+     <ul>
+     <% for ( let user of users ) { %> 
+     <li><%= user.username %></li>
+      <% } %>
+     </ul>
+     <% } %>
     <form action="/logout" method="post">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <button type="submit">Logout</button>

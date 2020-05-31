@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 router.get('/', (req, res) => {
-    res.render('index/landing', {path: 'index/landing'});
+    res.render('index/landing', {users: 0, path: 'index/landing'});
 });
 
 
