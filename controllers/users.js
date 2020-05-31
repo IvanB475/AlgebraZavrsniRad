@@ -151,4 +151,29 @@ router.post('/resetpw/:token', (req, res) => {
   });
 });
 
+
+router.post("/sendFriendReq", (req, res) => {
+  const friendId = req.body.wantedUserId;
+  User.findById(friendId).then(friend => {
+    return req.user.addToFriends(friend);
+  }).then( () => { 
+  res.render('index/landing', { users: 0, path: '/'})
+}).catch ( () => {
+  console.log("Failed");
+})
+})
+
+router.post("/acceptFriendReq", (req, res) => {
+  const friendId = req.body.acceptedFriendId;
+  console.log(friendId);
+  console.log(req.user._id);
+  User.findById(friendId).then(friend => {
+    return req.user.acceptFriend(friend);
+  }).then( () => { 
+  res.render('index/landing', { users: 0, path: '/'})
+}).catch ( () => {
+  console.log("Failed");
+})
+})
+
 module.exports = router;

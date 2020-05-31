@@ -14,12 +14,22 @@
      <ul>
      <% for ( let user of users ) { %> 
      <li><%= user.username %></li>
+     <form action="/sendFriendReq" method="POST">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <input type="hidden" name="wantedUserId" value="<%= user.id %>">
+      <button type="submit">Add friend</button>
+     </form>
+     <form action="/acceptFriendReq" method="POST">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <input type="hidden" name="acceptedFriendId" value="<%= user.id %>">
+      <button type="submit">Accept friend</button>
+     </form>
       <% } %>
      </ul>
      <% } else { %>
       <h3>No user with that username found</h3>
       <% } %> 
-    <form action="/logout" method="post">
+    <form action="/logout" method="POST">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <button type="submit">Logout</button>
     </form>
