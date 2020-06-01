@@ -17,7 +17,7 @@
                 </li>
             <% } else { %>
                 <li class="main-header__item">
-                    <a class="<%= path === '/user/:id' ? 'active' : '' %>" href="/user/<%= currentUser._id %>" >My friends</a>
+                    <a class="<%= path === '/myfriends' ? 'active' : '' %>" href="/myfriends" >My friends</a>
                 </li>
                 <li class="main-header__item">
                         <a class="<%= path === '/settings' ? 'active' : '' %>" href="/settings">Settings</a>

@@ -1,0 +1,15 @@
+<%- include('../partials/header.ejs') %>
+</head>
+
+<body>
+    <%- include('../partials/navbar') %>
+
+    <h1>My friends</h1>
+    <ul>
+    <% currentUser.friends.forEach( friend => { %>
+        <% if (friend.status === 'friends') { %>
+        <li><%= friend.username %></li>
+        <% } %> 
+    <% }) %>
+</ul>
+</body>

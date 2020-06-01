@@ -56,4 +56,8 @@ router.get("/user/:id", (req, res) => {
   })
 })
 
+router.get("/myfriends", (req, res) => {
+  res.render('users/myfriendlist', {path: 'users/myfriendlist'});
+})
+
 module.exports = router;
