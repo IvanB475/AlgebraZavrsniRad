@@ -8,7 +8,7 @@
     <ul>
     <% currentUser.friends.forEach( friend => { %>
         <% if (friend.status === 'friends') { %>
-        <li><%= friend.username %></li>
+        <li> <a href="/user/<%= friend.userId %>"><%= friend.username %> </a></li>
         <% } %> 
     <% }) %>
 </ul>
