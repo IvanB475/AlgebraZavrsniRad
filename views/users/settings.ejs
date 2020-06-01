@@ -12,5 +12,12 @@
         <div class="form-group">
             <button class="btn btn-lg btn-primary btn-block">Submit!</button>
         </div>
+
+        <% var i = 0 %>
+        <% currentUser.friends.forEach( friend => { %>
+            <% if(friend.status === "request received") { %>
+          <%  i++; }%>
+       <% }) %>
+       <h3>Received friend requests: <%= i %></h3>
     </form>
 </body>

@@ -13,7 +13,7 @@
      <h3>Found users</h3>
      <ul>
      <% for ( let user of users ) { %> 
-     <li><%= user.username %></li>
+     <li><a href="/user/<%= user._id %>"><%= user.username %></a></li>
      <form action="/sendFriendReq" method="POST">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <input type="hidden" name="wantedUserId" value="<%= user.id %>">
