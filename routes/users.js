@@ -36,4 +36,24 @@ router.get('/findusers', (req, res) => {
   })
 })
 
+router.get("/user/:id", (req, res) => {
+  const FRIENDS = [];
+  User.findById(req.params.id).exec((err, user) => {
+    if(err){
+      console.log(err)
+    } else {
+      user.friends.filter( friend => {
+        if(friend.status === "friends") {
+        FRIENDS.push(friend);
+        console.log(FRIENDS);
+        }
+    })
+    res.render('users/myfriends', {
+      path: '/users/:id',
+      friends: FRIENDS,
+    })
+    }
+  })
+})
+
 module.exports = router;

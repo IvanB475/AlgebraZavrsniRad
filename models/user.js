@@ -26,7 +26,7 @@ const userSchema = new Schema({
   }]
 });
 
-// rooms&messages need to be added
+
 
 userSchema.plugin(passportLocalMongoose);
 

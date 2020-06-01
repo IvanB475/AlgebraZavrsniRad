@@ -18,7 +18,7 @@ router.post("/signup", (req, res) => {
     } else {
       passport.authenticate("local")(req, res, () => {
         console.log("uspješna registracija");
-        res.render("index/landing", { path: "index/landing" });
+        res.render("index/landing", { path: "index/landing" , users: 0 });
       });
     }
   });
@@ -174,6 +174,7 @@ router.post("/acceptFriendReq", (req, res) => {
 }).catch ( () => {
   console.log("Failed");
 })
-})
+});
+
 
 module.exports = router;
