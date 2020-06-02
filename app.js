@@ -64,4 +64,21 @@ db.once("open", function () {
   console.log("success");
 });
 
-app.listen(8000, console.log("server started"));
+const server = app.listen(8000, console.log("server started"));
+const io = require('socket.io')(server);
+io.on('connection', socket => {
+
+  socket.username = "Anonymous";
+
+  socket.on('new_message', (data) => {
+    io.sockets.emit('new_message', {message: data.message, username: socket.username});
+  });
+
+  socket.on('typing', (data) => {
+    socket.broadcast.emit('typing', { username: socket.username});
+  });
+
+  socket.on('change_username', (data) => {
+    socket.username = data.username;
+  });
+})

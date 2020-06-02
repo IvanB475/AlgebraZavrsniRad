@@ -34,4 +34,12 @@
       <button type="submit">Logout</button>
     </form>
   </main>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>  
+    var socket = io.connect('localhost:8000');
+    socket.on('connect', function(data) {
+      console.log("this worked");
+       socket.emit('join', 'Hello World from client');
+    });
+   </script>
 </body>
