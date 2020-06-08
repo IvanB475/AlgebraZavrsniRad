@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const csrf = require('csurf');
 const path = require('path');
+const Room = require('./models/room');
 
 
 app.use(
@@ -67,10 +68,11 @@ db.once("open", function () {
 const server = app.listen(8000, console.log("server started"));
 const io = require('socket.io')(server);
 io.on('connection', socket => {
-
   socket.username = "Anonymous";
 
+
   socket.on('new_message', (data) => {
+    console.log("blaa");
     io.sockets.emit('new_message', {message: data.message, username: socket.username});
   });
 
@@ -81,4 +83,26 @@ io.on('connection', socket => {
   socket.on('change_username', (data) => {
     socket.username = data.username;
   });
+
+  socket.on("private", (data) => {
+      Room.find().all('members', [data.userid, data.senderid]).exec((err, room) => {
+        console.log(room.length);
+      if( room.length > 0) {
+        socket.join(room[0].name);
+        io.sockets.in(room[0].name).emit("private", { from: data.from, msg: data.msg});
+      } else {
+        const room = new Room({
+          name: data.roomName,
+          members: [ data.userid, data.senderid]
+        })
+        room.save().then(console.log("success"));
+        socket.join(data.roomName);
+        io.sockets.in(data.roomName).emit("private", { from: data.from, msg: data.msg});
+      }
+      
+    })
+     
+  })
+
+
 })

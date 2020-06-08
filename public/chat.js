@@ -22,6 +22,7 @@ $(function(){
 		socket.emit('new_message', {message : message.val()})
 	})
 
+
 	//Listen on new_message
 	socket.on("new_message", (data) => {
 		feedback.html('');

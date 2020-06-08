@@ -1,4 +1,8 @@
 <%- include('../partials/header') %> 
+<meta http-equiv="Content-Type" const="text/html;charset=UTF-8" />
+    <link href="http://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css" >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 </head>
 
 <body>
@@ -8,4 +12,21 @@
 
     <p>My name is: <%= user.username %></p>
     <p>You can contact me here <%= user.email %></p>
+
+    <section id="chatroom">
+        <section id="feedback"></section>
+      </section>
+   
+  
+      <section id="input_zone">
+        <input id="username" type="text" value="<%= user.username %>" hidden>
+        <input id="userid" type="text" value="<%= user.id %>" hidden> 
+        <input id="senderid" type="text" value="<%= currentUser.id %>" hidden>
+        <input id="sender" type="text" value ="<%= currentUser.username %>" hidden>
+        <input id="message" class="vertical-align" type="text" />
+        <button id="send_message" class="vertical-align" type="button">Send</button>
+      </section>
+
+      <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="/socket.js"></script>
 </body>
