@@ -84,25 +84,31 @@ io.on('connection', socket => {
     socket.username = data.username;
   });
 
+  socket.on("privateconn", (data) => {
+    Room.find().all('members', [data.userid, data.senderid]).exec((err, room) => {
+      console.log(room.length);
+    if( room.length > 0) {
+      socket.join(room[0].name);
+      for(var i = 0; i < room[0].messages.length; i++) {
+        socket.emit("private", { from: room[0].messages[i].sender, msg: room[0].messages[i].msg});
+      }
+    } else {
+      const room = new Room({
+        name: data.roomName,
+        members: [ data.userid, data.senderid],
+        messages: {sender: "Greeter", msg: "Welcome to chat"}
+      })
+      room.save().then(console.log("success"));
+      socket.join(data.roomName);
+    }   
+  })
+})
+
   socket.on("private", (data) => {
       Room.find().all('members', [data.userid, data.senderid]).exec((err, room) => {
-        console.log(room.length);
-      if( room.length > 0) {
-        socket.join(room[0].name);
+        room[0].messages.push({sender: data.from, msg: data.msg})
+        room[0].save();
         io.sockets.in(room[0].name).emit("private", { from: data.from, msg: data.msg});
-      } else {
-        const room = new Room({
-          name: data.roomName,
-          members: [ data.userid, data.senderid]
-        })
-        room.save().then(console.log("success"));
-        socket.join(data.roomName);
-        io.sockets.in(data.roomName).emit("private", { from: data.from, msg: data.msg});
-      }
-      
     })
-     
   })
-
-
 })

@@ -7,7 +7,14 @@ const roomSchema = new Schema({
     members: [ 
         {type: Schema.Types.ObjectId,
         ref: 'User'}
+    ],
+    messages: [
+        {
+            sender: String, 
+            msg: String
+        }
     ]
 })
 
 module.exports = mongoose.model('Room', roomSchema)
+

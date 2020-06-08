@@ -14,7 +14,7 @@
       
    document.addEventListener("DOMContentLoaded", function(event) { 
     console.log("workd");
-    socket.emit('private', {msg: sender + " joined chat", from: "Greeter", userid: userid, senderid: senderid, roomName: makeid(8)})
+    socket.emit('privateconn', {userid: userid, senderid: senderid, roomName: makeid(8)})
   });
 
    $(function(){
