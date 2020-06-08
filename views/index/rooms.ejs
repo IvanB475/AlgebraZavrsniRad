@@ -1,0 +1,20 @@
+
+    <%- include('../partials/header.ejs') %>
+    
+</head>
+<body>
+        <%- include('../partials/navbar.ejs') %>
+<h1>Sign up</h1>
+
+<form action="/room-register" method="POST">
+    <select name="room" id="room">
+        <option value="Algebra">Algebra</option>
+        <option value="Backend">Backend</option>
+        <option value="Frontend">Frontend</option>
+    </select>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input type="text" name="kod" placeholder="Unesite kod">
+    <button>Submit</button>
+</form>
+
+</html>

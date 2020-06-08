@@ -10,4 +10,8 @@ router.get('/chat', (req, res) => {
     res.render('index/socket', {path: 'index/socket'});
 })
 
+router.get("/room-register", (req, res) => {
+    res.render("index/rooms", {path: 'index/rooms'});
+})
+
 module.exports = router;

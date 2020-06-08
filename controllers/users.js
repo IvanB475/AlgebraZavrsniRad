@@ -177,4 +177,20 @@ router.post("/acceptFriendReq", (req, res) => {
 });
 
 
+router.post("/room-register", (req, res) => {
+  if(req.body.room === req.body.kod){
+    User.findById(req.user._id, (err, user) => {
+      if(err) {
+        res.redirect("/");
+      } else {
+        user.rooms.push(req.body.room);
+        user.save();
+        res.render("index/socket", { path: 'index/socket'});
+      }
+    })
+  } else {
+    res.redirect("/");
+}
+})
+
 module.exports = router;
