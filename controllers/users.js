@@ -193,4 +193,8 @@ router.post("/room-register", (req, res) => {
 }
 })
 
+router.post("/room" , (req, res) => {
+  res.render("index/room", {path: 'index/room', name: req.body.room})
+})
+
 module.exports = router;

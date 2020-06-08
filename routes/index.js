@@ -14,7 +14,7 @@ router.get("/room-register", (req, res) => {
     res.render("index/rooms", {path: 'index/rooms'});
 })
 
-router.get("/algebra", (req, res) => {
-    res.render("index/algebra", {path: 'index/algebra'});
+router.get("/room", (req, res) => {
+    res.render("index/room", {path: 'index/room'});
 })
 module.exports = router;

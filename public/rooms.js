@@ -34,7 +34,7 @@ message.on("keypress", () => {
 })
 
 //Listen on typing
-socket.on('typing', (data) => {
+socket.on('typing', () => {
     feedback.html("<p><i>" + " Someone is typing a message..." + "</i></p>")
 })
 });

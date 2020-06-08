@@ -7,7 +7,7 @@
 
 <body>
     <%- include('../partials/navbar') %> 
-        <h1>Algebra Chatroom</h1>
+        <h1><%= name %> Chatroom</h1>
 
     <section id="chatroom">
         <section id="feedback"></section>
@@ -15,7 +15,7 @@
    
   
       <section id="input_zone">
-          <input id="roomName" type="text" value="Algebra" hidden />
+          <input id="roomName" type="text" value="<%= name %>" hidden />
         <input id="sender" type="text" value ="<%= currentUser.username %>" hidden>
         <input id="message" class="vertical-align" type="text" />
         <button id="send_message" class="vertical-align" type="button">Send</button>
