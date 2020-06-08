@@ -111,4 +111,10 @@ io.on('connection', socket => {
         io.sockets.in(room[0].name).emit("private", { from: data.from, msg: data.msg});
     })
   })
+
+  socket.on("roomsMsg", (data) => {
+    console.log("ušao tu");
+    socket.join(data.roomName);
+      io.sockets.in(data.roomName).emit("roomsMsg", {from: data.from, msg: data.msg});
+    })
 })
