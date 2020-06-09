@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require('../models/user');
+const Post = require('../models/post');
 
 router.get("/signup", (req, res) => {
   res.render("users/signup", { path: "users/signup" });
@@ -51,7 +52,12 @@ router.get("/myfriends", (req, res) => {
 })
 
 router.get("/newsfeed", (req, res) => {
-  res.render("users/newsfeed", { path: 'users/newsfeed'});
+  Post.find().then(allPosts => {
+    res.render("users/newsfeed", {
+      path: "users/newsfeed",
+      posts: allPosts
+    });
+  }) 
 })
 
 module.exports = router;
