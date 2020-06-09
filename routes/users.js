@@ -50,4 +50,8 @@ router.get("/myfriends", (req, res) => {
   res.render('users/myfriendlist', {path: 'users/myfriendlist'});
 })
 
+router.get("/newsfeed", (req, res) => {
+  res.render("users/newsfeed", { path: 'users/newsfeed'});
+})
+
 module.exports = router;

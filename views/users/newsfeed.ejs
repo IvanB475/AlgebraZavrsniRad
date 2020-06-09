@@ -1,0 +1,12 @@
+<%- include('../partials/header') %>
+</head>
+
+<body>
+    <%- include('../partials/navbar') %>
+
+    <h5>Add a new post</h5>
+    <form action="/newsfeed" method="POST">
+        <textarea rows="5" cols="50" name="newpost"></textarea>
+        <button>Post!</button> 
+    </form>
+</body>

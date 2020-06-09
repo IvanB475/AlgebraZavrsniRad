@@ -4,7 +4,10 @@
     <nav class="main-header__nav">
         <ul class="main-header__item-list">
             <li class="main-header__item">
-                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Početna</a>
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Landing page</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/chat' ? 'active' : '' %>" href="/chat">Chat</a>
             </li>
         </ul>
         <ul class="main-header__item-list">
@@ -36,11 +39,11 @@
 <nav class="mobile-nav">
     <ul class="mobile-nav__item-list">
         <li class="mobile-nav__item">
-            <a class="<%= path === '/' ? 'active' : '' %>" href="/">Početna</a>
+            <a class="<%= path === '/' ? 'active' : '' %>" href="/">Landing page</a>
         </li>
         <% if (!currentUser) { %>
             <li class="mobile-nav__item">
-                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Prijava</a>
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
             </li>
             <li class="mobile-nav__item">
                 <a class="<%= path === '/registration' ? 'active' : '' %>" href="/registration">Registracija</a>
