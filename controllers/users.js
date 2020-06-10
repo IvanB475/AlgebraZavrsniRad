@@ -205,8 +205,8 @@ router.post("/newsfeed",(req, res) => {
     username: req.user.username,
     post: req.body.newpost
   });
-  post.save(); 
-  io.getIO().emit('posts', { post:post });
+  post.save();
+  io.getIO().emit('posts', { post:post , postid: post._id });
   res.redirect("/newsfeed");
 })
 

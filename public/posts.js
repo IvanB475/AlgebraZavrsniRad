@@ -16,9 +16,8 @@ $(function(){
 
     $(".selector").on('keyup click', function () {
         commentlist = $(this).find(".commentlist");
-        comment = $(this).find("#comment").val()
+        comment = $(this).find("#comment")
         postid = $(this).find("#postid").val();
-
     })
     send_message.click(function(){
         socket.emit("posts")
@@ -27,13 +26,32 @@ $(function(){
 //Listen on new_message
 socket.on("posts", (data) => {
     console.log("ušao tu");
-    postlist.prepend("<h5>" + data.post.username + "</h5> <textarea rows='5' cols='50' readonly>" + data.post.post + "</textarea>");
+    console.log(data.post.postid);
+    postlist.prepend("<h5>" + data.post.username + "</h5> <textarea rows='5' cols='50' readonly>" + data.post.post + "</textarea>" + 
+    `<div class="selector"> <div class="commentlist" id="commentlist${data.postid}">
+    </div>
+    </br>
+    <selection>
+        <input type="hidden" id="username" value='<%=currentUser.username %>'>
+        <input type="hidden" name="_csrf" value='<%= csrfToken %>'>
+        <input type="hidden" id="postid" value='${data.postid}'>
+        <input type="text" id='comment'>
+        <button id="sendcomment${data.postid}" type="submit" onclick="mySubmit()">Comment!</button> 
+    </selection>
+</div>`);
+
+$(".selector").on('keyup click', function () {
+    commentlist = $(this).find(".commentlist");
+    comment = $(this).find("#comment")
+    postid = $(this).find("#postid").val();
+})
 })
 
 socket.on("comments", (data) => {
     commentlist = "commentlist" + data.postid;
     commentlist = $(`#${commentlist}`);
     console.log(commentlist);
+    comment.val("");
     commentlist.append("<em>" + data.comment.username + "</em>" + `<input type='text' value= "${data.comment.message}" + readonly></br>`);
 })
 
@@ -42,7 +60,7 @@ socket.on("comments", (data) => {
 
 
 function mySubmit() {
-    socket.emit("comments", {username: username.val(), comment: comment, postid: postid});
+    socket.emit("comments", {username: username.val(), comment: comment.val(), postid: postid});
 }
 
  
