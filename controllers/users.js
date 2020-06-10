@@ -6,6 +6,7 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const async = require('async');
 const Post = require("../models/post");
+const io = require('../socket');
 
 router.post("/signup", (req, res) => {
   const newUser = new User({
@@ -198,14 +199,17 @@ router.post("/room" , (req, res) => {
   res.render("index/room", {path: 'index/room', name: req.body.room})
 });
 
-router.post("/newsfeed", (req, res) => {
+router.post("/newsfeed", async (req, res) => {
   const post = new Post({
     author: req.user,
     username: req.user.username,
     post: req.body.newpost
   });
-  post.save(); 
+  await post.save(); 
+  await io.getIO().emit('posts', { post:post });
   res.redirect("/newsfeed");
 })
+
+
 
 module.exports = router;

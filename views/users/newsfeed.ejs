@@ -1,4 +1,5 @@
 <%- include('../partials/header') %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 </head>
 
 <body>
@@ -8,9 +9,10 @@
     <form action="/newsfeed" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <textarea rows="5" cols="50" name="newpost"></textarea>
-        <button>Post!</button> 
+        <button id="send_message">Post!</button> 
     </form>
-
+    <section id="postlist">
+      </section>
     <% if (posts.length > 0) { %>
         <% for (var i = (posts.length - 1); i >= 0; i--) { %>
             <h5><%= posts[i].username %></h5>
@@ -21,4 +23,6 @@
             </form>
         <% } %>
     <% } %>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/posts.js"></script>
 </body>

@@ -66,7 +66,7 @@ db.once("open", function () {
 });
 
 const server = app.listen(8000, console.log("server started"));
-const io = require('socket.io')(server);
+const io = require('./socket').init(server);
 io.on('connection', socket => {
   socket.username = "Anonymous";
 
@@ -118,3 +118,5 @@ io.on('connection', socket => {
       io.sockets.in(data.roomName).emit("roomsMsg", {from: data.from, msg: data.msg});
     })
 })
+
+
