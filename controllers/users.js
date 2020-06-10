@@ -199,31 +199,16 @@ router.post("/room" , (req, res) => {
   res.render("index/room", {path: 'index/room', name: req.body.room})
 });
 
-router.post("/newsfeed", async (req, res) => {
+router.post("/newsfeed",(req, res) => {
   const post = new Post({
     author: req.user,
     username: req.user.username,
     post: req.body.newpost
   });
-  await post.save(); 
-  await io.getIO().emit('posts', { post:post });
+  post.save(); 
+  io.getIO().emit('posts', { post:post });
   res.redirect("/newsfeed");
 })
 
-router.post("/comment", (req, res) => {
-  const comment = {
-    username: req.user.username,
-    message: req.body.comment
-  }
-  Post.findById(req.body.postid, (err, post) => {
-    if(err) {
-      res.redirect("/");
-    } else {
-      post.comments.push(comment);
-      post.save();
-      res.redirect("/newsfeed");
-    }
-  })
-})
 
 module.exports = router;

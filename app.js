@@ -9,7 +9,7 @@ const session = require('express-session');
 const csrf = require('csurf');
 const path = require('path');
 const Room = require('./models/room');
-
+const Post = require('./models/post');
 
 app.use(
   session({
@@ -117,6 +117,18 @@ io.on('connection', socket => {
     socket.join(data.roomName);
       io.sockets.in(data.roomName).emit("roomsMsg", {from: data.from, msg: data.msg});
     })
+    socket.on("comments", (data) => {
+      console.log(data.commentlist);
+      const comment = {
+        username: data.username,
+        message: data.comment
+      };
+      Post.findById(data.postid).then((post) => {
+           post.comments.push(comment);
+          post.save();
+      })
+    io.emit('comments', { comment: comment, postid: data.postid});
+    });
 })
 
 
