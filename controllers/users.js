@@ -41,7 +41,7 @@ router.post("/logout", (req, res) => {
 router.post('/settings', (req, res, next) => {
   const update = { email: req.body.email}
   User.findByIdAndUpdate(req.user._id, update).then(result => {
-    res.render('index/landing', {path: '/'});
+    res.render('index/landing', {path: '/', users: 0});
     console.log(result);
   }).catch(err => {
     const error = new Error(err);
@@ -210,6 +210,20 @@ router.post("/newsfeed", async (req, res) => {
   res.redirect("/newsfeed");
 })
 
-
+router.post("/comment", (req, res) => {
+  const comment = {
+    username: req.user.username,
+    message: req.body.comment
+  }
+  Post.findById(req.body.postid, (err, post) => {
+    if(err) {
+      res.redirect("/");
+    } else {
+      post.comments.push(comment);
+      post.save();
+      res.redirect("/newsfeed");
+    }
+  })
+})
 
 module.exports = router;

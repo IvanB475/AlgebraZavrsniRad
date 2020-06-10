@@ -7,7 +7,7 @@ const postSchema = new Schema({
     username: String,
     post: String,
     time: {type: Date, default: Date.now},
-    Comments: [
+    comments: [
         { 
             username: String,
             message: String,
