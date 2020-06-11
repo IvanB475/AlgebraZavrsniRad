@@ -51,7 +51,6 @@ socket.on("comments", (data) => {
     commentlist = "commentlist" + data.postid;
     commentlist = $(`#${commentlist}`);
     console.log(commentlist);
-    comment.val("");
     commentlist.append("<em>" + data.comment.username + "</em>" + `<input type='text' value= "${data.comment.message}" + readonly></br>`);
 })
 
@@ -61,6 +60,8 @@ socket.on("comments", (data) => {
 
 function mySubmit() {
     socket.emit("comments", {username: username.val(), comment: comment.val(), postid: postid});
+    comment.val("");
+
 }
 
  

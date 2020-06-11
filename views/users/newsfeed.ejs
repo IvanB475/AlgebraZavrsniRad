@@ -1,5 +1,5 @@
 <%- include('../partials/header') %>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 </head>
 
 <body>
@@ -35,7 +35,7 @@
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <input type="hidden" id="postid" value="<%= posts[i].id %>">
             <input type="text" id="comment">
-            <button id="sendcomment<%=posts[i].id%>" type="submit" onclick="mySubmit()">Comment!</button> 
+            <button id="sendcomment" type="submit" onclick="mySubmit()">Comment!</button> 
         </selection>
     </div>
         <% } %>
@@ -43,3 +43,5 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/posts.js"></script>
 </body>
+
+
