@@ -11,6 +11,10 @@ var feedback = $("#feedback")
 var roomName = $("#roomName").val();
 var sender = $("#sender").val();
 
+document.addEventListener("DOMContentLoaded", () => { 
+    console.log("workd");
+    socket.emit('roomsMsg', {from: 'Greeter', msg: sender + ' joined ' + ' chat room', roomName: roomName});
+  });
 
 $(function(){
 //Emit message

@@ -113,6 +113,7 @@ io.on('connection', socket => {
   })
 
   socket.on("roomsMsg", (data) => {
+    console.log(data.roomName);
     socket.join(data.roomName);
       io.sockets.in(data.roomName).emit("roomsMsg", {from: data.from, msg: data.msg});
     })
