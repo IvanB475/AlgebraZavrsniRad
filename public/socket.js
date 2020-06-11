@@ -21,13 +21,13 @@
        //Emit message
        send_message.click(function(){
            socket.emit("private", {msg: message.val(), from: sender, userid: userid, senderid: senderid, roomName: makeid(8)})
+           feedback.html('');
+           message.val('');
        })
    
 
        //Listen on new_message
        socket.on("private", (data) => {
-           feedback.html('');
-           message.val('');
            chatroom.append("<p class='message'>" + data.from + " -> " + data.msg +"</p>");
    })
 

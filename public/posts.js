@@ -9,6 +9,7 @@ var username = $("#username")
 var comment = $("#comment")
 var postid = $("#postid")
 var commentlist = $(".commentlist")
+var sendcomment = $("#sendcomment")
 
 
 
@@ -17,8 +18,16 @@ $(function(){
     $(".selector").on('keyup click', function () {
         commentlist = $(this).find(".commentlist");
         comment = $(this).find("#comment")
+        sendcomment = $(this).find("#sendcomment");
         postid = $(this).find("#postid").val();
+        comment.on('keyup', (event) => {
+            if(event.keyCode === 13) {
+                sendcomment.click();
+            }   
+        })
     })
+
+
     send_message.click(function(){
         socket.emit("posts")
     })
@@ -36,7 +45,7 @@ socket.on("posts", (data) => {
         <input type="hidden" name="_csrf" value='<%= csrfToken %>'>
         <input type="hidden" id="postid" value='${data.postid}'>
         <input type="text" id='comment'>
-        <button id="sendcomment${data.postid}" type="submit" onclick="mySubmit()">Comment!</button> 
+        <button id="sendcomment" type="submit" onclick="mySubmit()">Comment!</button> 
     </selection>
 </div>`);
 
@@ -46,6 +55,7 @@ $(".selector").on('keyup click', function () {
     postid = $(this).find("#postid").val();
 })
 })
+
 
 socket.on("comments", (data) => {
     commentlist = "commentlist" + data.postid;
@@ -59,13 +69,14 @@ socket.on("comments", (data) => {
 
 
 function mySubmit() {
+    if( comment.val().length > 0) { 
     socket.emit("comments", {username: username.val(), comment: comment.val(), postid: postid});
     comment.val("");
+    }
+    else return; 
 
 }
 
  
-
-
 
 

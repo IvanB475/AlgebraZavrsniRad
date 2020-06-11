@@ -15,6 +15,8 @@ $(function(){
 //Emit message
 send_message.click(function(){
     socket.emit('roomsMsg', { from: sender, msg : message.val(), roomName: roomName})
+    feedback.html('');
+    message.val('');
 })
 
 console.log(roomName);
@@ -22,8 +24,6 @@ console.log(roomName);
 //Listen on new_message
 socket.on("roomsMsg", (data) => {
     console.log("a tu");
-    feedback.html('');
-    message.val('');
     chatroom.append("<p class='message'>" + data.from + " -> " + data.msg +"</p>");
 })
 
