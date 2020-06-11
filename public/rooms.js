@@ -1,5 +1,4 @@
-var roomName = document.getElementById("roomName").value; 
-var sender = document.getElementById("sender").value;
+
 
 //make connection
 var socket = io.connect('http://localhost:8000')
@@ -9,6 +8,8 @@ var message = $("#message")
 var send_message = $("#send_message")
 var chatroom = $("#chatroom")
 var feedback = $("#feedback")
+var roomName = $("#roomName").val();
+var sender = $("#sender").val();
 
 
 $(function(){
@@ -23,10 +24,15 @@ console.log(roomName);
 
 //Listen on new_message
 socket.on("roomsMsg", (data) => {
-    console.log("a tu");
+    feedback.html('');
     chatroom.append("<p class='message'>" + data.from + " -> " + data.msg +"</p>");
 })
 
+message.on('keyup', (event) => {
+    if(event.keyCode === 13) {
+        send_message.click();
+    }
+})
 
 //Emit typing
 message.on("keypress", () => {

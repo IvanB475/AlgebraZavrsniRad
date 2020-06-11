@@ -28,10 +28,16 @@
 
        //Listen on new_message
        socket.on("private", (data) => {
+        feedback.html('');
            chatroom.append("<p class='message'>" + data.from + " -> " + data.msg +"</p>");
    })
 
-    
+   message.on('keyup', (event) => {
+    if(event.keyCode === 13) {
+        send_message.click();
+    }
+})
+
 
        //Emit typing
        message.on("keypress", () => {

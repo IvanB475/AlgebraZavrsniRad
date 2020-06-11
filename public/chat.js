@@ -16,6 +16,8 @@
 		socket.emit('change_username', {username : username.val()})
 	  });
 
+	
+
 $(function(){
 	//Emit message
 	send_message.click(function(){
@@ -23,6 +25,11 @@ $(function(){
 		message.val('');
 	})
 
+	message.on('keyup', (event) => {
+		if(event.keyCode === 13) {
+			send_message.click();
+		}
+	})
 
 	//Listen on new_message
 	socket.on("new_message", (data) => {
