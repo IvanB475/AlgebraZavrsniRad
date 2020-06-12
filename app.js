@@ -72,12 +72,11 @@ io.on('connection', socket => {
 
 
   socket.on('new_message', (data) => {
-    console.log("blaa");
     io.sockets.emit('new_message', {message: data.message, username: socket.username});
   });
 
   socket.on('typing', (data) => {
-    socket.broadcast.emit('typing', { username: socket.username});
+    socket.broadcast.emit('typing', { username: socket.username, from: data.from});
   });
 
   socket.on('change_username', (data) => {
@@ -86,7 +85,6 @@ io.on('connection', socket => {
 
   socket.on("privateconn", (data) => {
     Room.find().all('members', [data.userid, data.senderid]).exec((err, room) => {
-      console.log(room.length);
     if( room.length > 0) {
       socket.join(room[0].name);
       for(var i = 0; i < room[0].messages.length; i++) {

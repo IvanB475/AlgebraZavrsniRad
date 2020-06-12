@@ -41,7 +41,7 @@
 
        //Emit typing
        message.on("keypress", () => {
-           socket.emit('typing')
+           socket.emit('typing', { from: sender })
        })
    
        //Listen on typing
