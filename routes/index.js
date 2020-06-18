@@ -17,4 +17,8 @@ router.get("/room-register", (req, res) => {
 router.get("/room", (req, res) => {
     res.render("index/room", {path: 'index/room'});
 })
+
+router.get("/scaledronechat", (req, res) => {
+    res.render("index/scaledronechat", {path: 'index/scaledronechat'});
+})
 module.exports = router;

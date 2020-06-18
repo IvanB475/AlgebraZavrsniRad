@@ -9,6 +9,9 @@
             <li class="main-header__item">
                 <a class="<%= path === '/chat' ? 'active' : '' %>" href="/chat">Chat</a>
             </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/chat' ? 'active' : '' %>" href="/scaledronechat">Scaledrone chat</a>
+            </li>
         </ul>
         <ul class="main-header__item-list">
             <% if (!currentUser) { %>
@@ -21,6 +24,9 @@
             <% } else { %>
                 <li class="main-header__item">
                     <a class="<%= path === '/myfriends' ? 'active' : '' %>" href="/myfriends" >My friends</a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/chat' ? 'active' : '' %>" href="/newsfeed">Newsfeed</a>
                 </li>
                 <li class="main-header__item">
                         <a class="<%= path === '/settings' ? 'active' : '' %>" href="/settings">Settings</a>

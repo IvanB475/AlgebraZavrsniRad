@@ -1,10 +1,4 @@
-@mixin vertical-align {
-  position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
+
 
 * {
     box-sizing: border-box;
@@ -64,7 +58,7 @@ input#username {
 
 input#message {
     display: inline-block;
-    width: 88%;
+    width: 73%;
     height: 70%;
     font-family: 'Comfortaa', sans-serif;
     font-size: 2vh;

@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="/css/friends.css">
+<div class="friend_list">
+    <h3> Your friends</h3>
+    <div class="chat">
+        <% if( currentUser.friends.length > 0 ) { %>
+            <% for(var i = 0; i < currentUser.friends.length; i++) { %>
+                <div class="friends">
+                    <div class="friend">
+                        <div class="mini-img"><img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" width="40px" height="40px">
+                        </div>
+                            <h5>
+                            <a href="/user/<%= currentUser.friends[i].userId %>"><%= currentUser.friends[i].username %></a>
+                        </h5>
+                        <input type="hidden" value="<%= currentUser.friends[i].userId %>">
+                    </div>
+                </div>
+           <% } %>
+       <% } else { %>
+        <h5> You don't have any friends</h5>
+        <% } %>
+    </div>
+</div>

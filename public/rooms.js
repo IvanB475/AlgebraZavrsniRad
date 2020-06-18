@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     socket.emit('roomsMsg', {from: 'Greeter', msg: sender + ' joined ' + ' chat room', roomName: roomName});
   });
 
+  
 $(function(){
 //Emit message
 send_message.click(function(){
