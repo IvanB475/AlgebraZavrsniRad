@@ -41,12 +41,12 @@ message.on('keyup', (event) => {
 
 //Emit typing
 message.on("keypress", () => {
-    socket.emit('typing')
+    socket.emit('typing', { from: sender});
 })
 
 //Listen on typing
-socket.on('typing', () => {
-    feedback.html("<p><i>" + " Someone is typing a message..." + "</i></p>")
+socket.on('typing', (data) => {
+    feedback.html("<p><i>" + data.from + "  is typing a message..." + "</i></p>")
 })
 });
 

@@ -1,5 +1,3 @@
-// PS! Replace this with your own channel ID
-// If you use this channel ID your app will stop working in the future
 const CLIENT_ID = 'IiACZGJRS9wyY05h';
 
 const drone = new ScaleDrone(CLIENT_ID, {

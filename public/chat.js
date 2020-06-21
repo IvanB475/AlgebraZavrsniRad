@@ -25,6 +25,11 @@ $(function(){
 		message.val('');
 	})
 
+
+	message.on("keypress", () => {
+		socket.emit('typing', { from: username.val() })
+	})
+
 	message.on('keyup', (event) => {
 		if(event.keyCode === 13) {
 			send_message.click();
@@ -43,13 +48,11 @@ $(function(){
 	})
 
 	//Emit typing
-	message.on("keypress", () => {
-		socket.emit('typing')
-	})
 
 	//Listen on typing
 	socket.on('typing', (data) => {
-		feedback.html("<p><i>" + data.username + " is typing a message..." + "</i></p>")
+		console.log("ušao tu");
+		feedback.html("<p><i>" + data.from + " is typing a message..." + "</i></p>")
 	})
 });
 
