@@ -14,9 +14,25 @@
         </div>
     </form>
     <% var i = 0 %>
+    <% currentUser.friends.forEach( friend => { %>
+        <% if(friend.status === "request received") { %>
+      <%  i++; }%>
+   <% }) %>
+
+    <h3>Friend requests received: <%= i %></h3>
+    
+    <ul>
         <% currentUser.friends.forEach( friend => { %>
             <% if(friend.status === "request received") { %>
-          <%  i++; }%>
+                <li>
+                <%= friend.username %>
+                <form action="/acceptFriendReq" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="acceptedFriendId" value="<%= friend.userId %>">
+                    <button type="submit">Accept friend</button>
+                </form>
+            </li>
+          <% }%>
        <% }) %>
-       <h3>Received friend requests: <%= i %></h3>
+    </ul>
 </body>
