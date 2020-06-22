@@ -10,6 +10,9 @@ const userSchema = new Schema({
   password: {
     type: String,
   },
+  imageUrl: {
+    type: String
+  },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   status: {

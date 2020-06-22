@@ -39,7 +39,8 @@ router.post("/logout", (req, res) => {
 });
 
 router.post('/settings', (req, res, next) => {
-  const update = { email: req.body.email}
+  const update = { email: req.body.email, imageUrl: req.file.path}
+  console.log(req.file);
   User.findByIdAndUpdate(req.user._id, update).then(result => {
     res.render('index/landing', {path: '/', users: 0});
     console.log(result);

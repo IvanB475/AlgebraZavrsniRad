@@ -29,10 +29,6 @@
      <% } else { %>
       <h3>No user with that username found</h3>
       <% } %> 
-    <form action="/logout" method="POST">
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <button type="submit">Logout</button>
-    </form>
     <form action="/room" method="POST">
       <select name="room" id="room">
           <option value="Algebra">Algebra</option>

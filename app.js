@@ -10,6 +10,8 @@ const csrf = require('csurf');
 const path = require('path');
 const Room = require('./models/room');
 const Post = require('./models/post');
+const multer = require('multer');
+const uuidv4 = require('uuid/v4');
 
 app.use(
   session({
@@ -22,6 +24,36 @@ app.use(
 const usersRoutes = require("./routes/users");
 const indexRoutes = require("./routes/index");
 const usersControllers = require("./controllers/users");
+
+
+const fileStorage = multer.diskStorage({
+  destination: function(req, file, cb) {
+      cb(null, 'images');
+  },
+  filename: function(req, file, cb) {
+      cb(null, uuidv4())
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  if(
+      file.mimetype === 'image/png' ||
+      file.mimetype === 'image/jng' ||
+      file.mimetype === 'image/jpeg'||
+      file.mimetype === 'image/pdf'
+  ) {
+      cb(null, true);
+  } else {
+      cb(null, false);
+  }
+}
+
+
+app.use(
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
+);
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 const csrfProtection = csrf();
