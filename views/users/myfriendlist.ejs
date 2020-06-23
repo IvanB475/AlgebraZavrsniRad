@@ -10,6 +10,11 @@
         <% if (friends.length > 0) { %> 
         <% for ( var i = 0; i < friends.length; i++) { %>
          <div class="friendBox">
+            <%  if( friends[i].imageUrl !== undefined ) {  %>
+                <img src="<%= friends[i].imageUrl %>" class="profile_img" width= "50px" height="50px"></img>
+           <% } else { %>
+                <img src="https://ptetutorials.com/images/user-profile.png" class="profile_img" width= "50px" height="50px"></img>
+          <%  } %>   
             <a href="/user/<%= friends[i].id %>"><%= friends[i].username %> </a>
             </div>
         <% } %> 

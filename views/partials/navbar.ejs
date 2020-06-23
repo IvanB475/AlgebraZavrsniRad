@@ -22,7 +22,11 @@
                     <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
                 </li>
             <% } else { %>
-                <img src="/<%= currentUser.imageUrl %>" class="profile_img" width= "24px" height="24px"></img>
+              <%  if( currentUser.imageUrl !== undefined ) {  %>
+                <img src="<%= currentUser.imageUrl %>" class="profile_img" width= "24px" height="24px"></img>
+           <% } else { %>
+                <img src="https://ptetutorials.com/images/user-profile.png" class="profile_img" width= "24px" height="24px"></img>
+          <%  } %>
                 <li class="main-header__item">
                     <a class="<%= path === '/settings' ? 'active' : '' %>" href="/settings"><%= currentUser.username %></a>
             </li>
