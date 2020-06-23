@@ -1,5 +1,4 @@
 <%- include('../partials/header.ejs') %>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 </head>
 <body>
     <%- include('../partials/navbar.ejs') %>
@@ -40,12 +39,6 @@
     </ul>
 
     <div class="pageselector">
-        <h5>Add a new post</h5>
-        <form action="/newsfeed" method="POST">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <textarea rows="5" cols="50" name="newpost"></textarea>
-            <button id="send_message">Post!</button> 
-        </form>
         <section id="postlist">
           </section>
         <% if (posts.length > 0) { %>
@@ -76,7 +69,4 @@
             <% } %>
         <% } %>
     </div>
-
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="/posts.js"></script>
 </body>

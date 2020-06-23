@@ -6,11 +6,14 @@
     <%- include('../partials/friends') %>
     <h1>My friends</h1>
     <ul>
-    <% currentUser.friends.forEach( friend => { %>
-        <% if (friend.status === 'friends') { %>
-        <li> <a href="/user/<%= friend.userId %>"><%= friend.username %> </a></li>
+        <% console.log(friends.length) %>
+        <% if (friends.length > 0) { %> 
+        <% for ( var i = 0; i < friends.length; i++) { %>
+         <div class="friendBox">
+            <a href="/user/<%= friends[i].id %>"><%= friends[i].username %> </a>
+            </div>
         <% } %> 
-    <% }) %>
+    <% } %>
 </ul>
 
     <h2>Find friends</h2>

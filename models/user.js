@@ -24,6 +24,7 @@ const userSchema = new Schema({
       ref: 'User',
       required: true
     },
+    imageUrl: { type: String},
     username: { type: String},
     status: { type: String, required: true}
   }],
@@ -41,12 +42,14 @@ userSchema.methods.addToFriends = function(friend) {
   updatedFriends.push({
     userId: friend._id,
     username: friend.username,
-    status: "pending"
+    status: "pending",
+    imageUrl: friend.imageUrl || "images\\4ee61f82-2edd-4587-9e14-cda07145fcb2"
   });
 
   friendsFriends.push({
     userId: this._id,
     username: this.username,
+    imageUrl: this.imageUrl || "images\\4ee61f82-2edd-4587-9e14-cda07145fcb2",
     status: "request received"
   });
 
