@@ -202,7 +202,7 @@ router.post("/room" , (req, res) => {
 
 router.post("/newsfeed",(req, res) => {
   const post = new Post({
-    author: req.user,
+    author: req.user._id,
     username: req.user.username,
     post: req.body.newpost
   });

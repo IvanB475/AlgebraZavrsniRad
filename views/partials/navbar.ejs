@@ -22,14 +22,15 @@
                     <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
                 </li>
             <% } else { %>
+                <img src="/<%= currentUser.imageUrl %>" class="profile_img" width= "24px" height="24px"></img>
+                <li class="main-header__item">
+                    <a class="<%= path === '/settings' ? 'active' : '' %>" href="/settings"><%= currentUser.username %></a>
+            </li>
                 <li class="main-header__item">
                     <a class="<%= path === '/myfriends' ? 'active' : '' %>" href="/myfriends" >My friends</a>
                 </li>
                 <li class="main-header__item">
                     <a class="<%= path === '/chat' ? 'active' : '' %>" href="/newsfeed">Newsfeed</a>
-                </li>
-                <li class="main-header__item">
-                        <a class="<%= path === '/settings' ? 'active' : '' %>" href="/settings">Settings</a>
                 </li>
                 <li class="main-header__item">
                     <form action="/logout" method="post">
@@ -41,26 +42,3 @@
         </ul>
     </nav>
 </header>
-
-<nav class="mobile-nav">
-    <ul class="mobile-nav__item-list">
-        <li class="mobile-nav__item">
-            <a class="<%= path === '/' ? 'active' : '' %>" href="/">Landing page</a>
-        </li>
-        <% if (!currentUser) { %>
-            <li class="mobile-nav__item">
-                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
-            </li>
-            <li class="mobile-nav__item">
-                <a class="<%= path === '/registration' ? 'active' : '' %>" href="/registration">Registracija</a>
-            </li>
-        <% } else { %>
-            <li class="mobile-nav__item">
-                <input type="hidden" name="_csrf" value="${req.csrfToken()}" />
-                <form action="/logout" method="post">
-                    <button type="submit">Logout</button>
-                </form>
-            </li>
-        <% } %>
-    </ul>
-</nav>

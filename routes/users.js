@@ -13,7 +13,11 @@ router.get("/login", (req, res) => {
 })
 
 router.get("/settings", (req, res) => {
-  res.render("users/settings", {path: "users/settings"});
+  Post.find({"author": req.user._id}).then(allPosts => {
+    res.render("users/settings", {  
+       posts: allPosts,
+       path: "users/settings"});
+  })
 });
 
 router.get("/resetpw", (req, res) => {
@@ -33,7 +37,7 @@ router.get('/resetpw/:token', (req, res) => {
 router.get('/findusers', (req, res) => {
   const regex = new RegExp(req.query.search, 'gi');
   User.find({"username": regex}, (err, allUsers) => {
-    res.render('index/landing', { users: allUsers, path: 'index/landing' })
+    res.render('users/myfriendlist', { users: allUsers, path: 'users/myfriendlist' })
   })
 })
 
@@ -48,7 +52,7 @@ router.get("/user/:id", (req, res) => {
 })
 
 router.get("/myfriends", (req, res) => {
-  res.render('users/myfriendlist', {path: 'users/myfriendlist'});
+  res.render('users/myfriendlist', {users: 17555, path: 'users/myfriendlist'});
 })
 
 router.get("/newsfeed", (req, res) => {

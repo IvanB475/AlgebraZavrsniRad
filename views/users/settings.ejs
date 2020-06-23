@@ -1,5 +1,5 @@
 <%- include('../partials/header.ejs') %>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 </head>
 <body>
     <%- include('../partials/navbar.ejs') %>
@@ -8,7 +8,6 @@
         <div>
             <input type="text" name="email" value="<%= currentUser.email %>">
         </div>
-        <img src="/<%= currentUser.imageUrl %>" width= "100px" height="100px"></img>
         <label for="image">Image</label>
         <input type="file" name="image" id="image"> 
         </div>
@@ -39,4 +38,45 @@
           <% }%>
        <% }) %>
     </ul>
+
+    <div class="pageselector">
+        <h5>Add a new post</h5>
+        <form action="/newsfeed" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <textarea rows="5" cols="50" name="newpost"></textarea>
+            <button id="send_message">Post!</button> 
+        </form>
+        <section id="postlist">
+          </section>
+        <% if (posts.length > 0) { %>
+            <% for (var i = (posts.length - 1); i >= 0; i--) { %>
+                <h5><%= posts[i].username %></h5>
+            <textarea rows="5" cols="50" readonly><%= posts[i].post %></textarea>
+            </br>
+            <div class="selector"> 
+            <div class="commentlist" id="commentlist<%= posts[i].id %>">
+            <% if ( posts[i].comments.length > 0 &&  posts[i].comments.length < 6) { %> 
+            <% for ( var y = 0; y <= (posts[i].comments.length-1); y++) { %>
+              <em><%= posts[i].comments[y].username %></em> <input type="text"  value="<%= posts[i].comments[y].message %>" readonly> </br>
+              <% } %>
+              <% } else if(posts[i].comments.length >= 6) { %>
+                <% for ( var y = (posts[i].comments.length -1); y >= (posts[i].comments.length -6); y--) { %>
+                    <em><%= posts[i].comments[y].username %></em> <input type="text"  value="<%= posts[i].comments[y].message %>" readonly> </br>
+                <% } } else { } %>
+            </div>
+            </br>
+            <selection>
+                <input type="hidden" id="username" value="<%=currentUser.username %>">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <input type="hidden" id="postid" value="<%= posts[i].id %>">
+                <input type="text" id="comment">
+                <button id="sendcomment" type="submit" onclick="mySubmit()">Comment!</button> 
+            </selection>
+        </div>
+            <% } %>
+        <% } %>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/posts.js"></script>
 </body>

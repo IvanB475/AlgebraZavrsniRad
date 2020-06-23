@@ -4,31 +4,6 @@
   <%- include('../partials/navbar')%>
   <main>
     <h1>Hello everyone</h1>
-    <form action="/findusers" method="GET">
-      <label for="search">Find users</label>
-      <input type="text" name="search" id="search">
-      <input type="submit" value="Search">
-     </form>
-     <% if ( users.length > 0 ) { %> 
-     <h3>Found users</h3>
-     <ul>
-     <% for ( let user of users ) { %> 
-     <li><a href="/user/<%= user._id %>"><%= user.username %></a></li>
-     <form action="/sendFriendReq" method="POST">
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <input type="hidden" name="wantedUserId" value="<%= user.id %>">
-      <button type="submit">Add friend</button>
-     </form>
-     <form action="/acceptFriendReq" method="POST">
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <input type="hidden" name="acceptedFriendId" value="<%= user.id %>">
-      <button type="submit">Accept friend</button>
-     </form>
-      <% } %>
-     </ul>
-     <% } else { %>
-      <h3>No user with that username found</h3>
-      <% } %> 
     <form action="/room" method="POST">
       <select name="room" id="room">
           <option value="Algebra">Algebra</option>
