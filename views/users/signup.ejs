@@ -1,14 +1,25 @@
 <%- include('../partials/header')%>
+<link rel="stylesheet" href="/css/form.css">
 </head>
 <%- include('../partials/navbar')%>
 <h1>Sign up</h1>
+<div class="box">
 <form action="/signup" method="POST">
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <input type="text" name="username" placeholder="Korisnicko ime">
-    <input type="password" name="password" pattern=".{6,}" placeholder="password">
-    <input type="email" name="email" placeholder="email">
-    <button>Sign up</button>
+    <div class="input-container">
+        <label for="username">Username</label>
+        <input type="text" name="username">
+    </div>
+    <div class="input-container">
+        <label for="password">Password</label>
+        <input type="password" name="password" pattern=".{6,}">
+    </div>
+    <div class="input-container">
+        <label for="email">Email</label>
+        <input type="email" name="email">
+    </div>
+    <button class="btn">Sign up</button>
 </form>
-
+</div>
 
 </html>

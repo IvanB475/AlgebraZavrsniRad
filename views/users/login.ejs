@@ -1,16 +1,23 @@
 <%- include('../partials/header.ejs') %> 
+<link rel="stylesheet" href="/css/form.css">
 </head>
 
 <body>
     <%- include('../partials/navbar.ejs') %>
     <h1>Login</h1>
+    <div class="box">
     <form action="/login" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <label for="username">Korisničko ime</label>
+        <div class="input-container">
+        <label for="username">Username</label>
         <input type="text" name="username" id="username">
+    </div>
         <br>
-        <label for="password">Lozinka</label>
+        <div class="input-container">
+        <label for="password">Password</label>
         <input type="password" name="password" pattern=".{6,}" id="password">
-        <button>Login</button>
+    </div>
+        <button class="btn">Login</button>
     </form>
+    </div>
 </body>
