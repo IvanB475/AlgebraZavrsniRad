@@ -1,32 +1,64 @@
 <%- include('../partials/header.ejs') %>
+<style>
+    .pageselector {
+        max-width: 300px;
+        margin: auto;
+    }
+    h1 {
+        text-align: center;
+    }
+    .settingsClass {
+        max-width: 300px;
+        float: right;
+        margin-right: 10px;
+        border: 1px solid black;
+    }
+
+    .friendReqClass {
+        width: 400px;
+        text-align: center;
+        float: left;
+        margin-left: 10px;
+        border: 1px solid black;
+    }
+
+    .friendReqClass ul {
+        list-style-type: none;
+        padding-inline-start: 0px;
+    }
+</style>
 </head>
 <body>
     <%- include('../partials/navbar.ejs') %>
-    <h1>Settings</h1>
-    <form action="/settings" method="POST" enctype="multipart/form-data">
-        <div>
-            <input type="text" name="email" value="<%= currentUser.email %>">
-        </div>
-        <label for="image">Image</label>
-        <input type="file" name="image" id="image"> 
-        </div>
-        <div class="form-group">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button class="btn btn-lg btn-primary btn-block">Submit!</button>
-        </div>
-    </form>
+    <h1><%= currentUser.username %></h1>
+    <div class="settingsClass">
+    <h3>Settings</h3>
+        <form action="/settings" method="POST" enctype="multipart/form-data">
+            <div>
+                <label for="email">Email</label>
+                <input type="text" name="email" value="<%= currentUser.email %>">
+            </div>
+            <label for="image">Profile picture</label>
+            <input type="file" name="image" id="image"> 
+            <div class="form-group">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button class="btn btn-primary">Submit!</button>
+            </div>
+        </form>
+    </div>
     <% var i = 0 %>
     <% currentUser.friends.forEach( friend => { %>
         <% if(friend.status === "request received") { %>
       <%  i++; }%>
    <% }) %>
 
-    <h3>Friend requests received: <%= i %></h3>
-    
-    <ul>
-        <% currentUser.friends.forEach( friend => { %>
+    <div class="friendReqClass">
+        <h3>Friend requests received: <%= i %></h3>
+        <ul>
+            <% currentUser.friends.forEach( friend => { %>
             <% if(friend.status === "request received") { %>
-                <li>
+            <li>
+                <img src="<%= friend.imageUrl %>" class="profile_img" width= "25px" height="25px"></img>
                 <%= friend.username %>
                 <form action="/acceptFriendReq" method="POST">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -34,9 +66,10 @@
                     <button type="submit">Accept friend</button>
                 </form>
             </li>
-          <% }%>
-       <% }) %>
-    </ul>
+            <% }%>
+            <% }) %>
+        </ul>
+    </div>
 
     <div class="pageselector">
         <section id="postlist">
@@ -50,7 +83,7 @@
             <div class="commentlist" id="commentlist<%= posts[i].id %>">
             <% if ( posts[i].comments.length > 0 &&  posts[i].comments.length < 6) { %> 
             <% for ( var y = 0; y <= (posts[i].comments.length-1); y++) { %>
-              <em><%= posts[i].comments[y].username %></em> <input type="text"  value="<%= posts[i].comments[y].message %>" readonly> </br>
+              <em><%= posts[i].comments[y].username %></em> <input type="text" class="form-control-plaintext"  value="<%= posts[i].comments[y].message %>" readonly> </br>
               <% } %>
               <% } else if(posts[i].comments.length >= 6) { %>
                 <% for ( var y = (posts[i].comments.length -1); y >= (posts[i].comments.length -6); y--) { %>

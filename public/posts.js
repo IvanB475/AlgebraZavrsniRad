@@ -1,43 +1,43 @@
-
 //make connection
-var socket = io.connect('http://localhost:8000');
+var socket = io.connect("http://localhost:8000");
 
 //buttons and inputs
-var postlist = $("#postlist")
-var send_message = $("#send_message")
-var username = $("#username")
-var comment = $("#comment")
-var postid = $("#postid")
-var commentlist = $(".commentlist")
-var sendcomment = $("#sendcomment")
+var postlist = $("#postlist");
+var send_message = $("#send_message");
+var username = $("#username");
+var comment = $("#comment");
+var postid = $("#postid");
+var commentlist = $(".commentlist");
+var sendcomment = $("#sendcomment");
 
+$(function () {
+  $(".selector").on("keyup click", function () {
+    commentlist = $(this).find(".commentlist");
+    comment = $(this).find("#comment");
+    sendcomment = $(this).find("#sendcomment");
+    postid = $(this).find("#postid").val();
+    comment.on("keyup", (event) => {
+      if (event.keyCode === 13) {
+        sendcomment.click();
+      }
+    });
+  });
 
+  send_message.click(function () {
+    socket.emit("posts");
+  });
 
-$(function(){
-
-    $(".selector").on('keyup click', function () {
-        commentlist = $(this).find(".commentlist");
-        comment = $(this).find("#comment")
-        sendcomment = $(this).find("#sendcomment");
-        postid = $(this).find("#postid").val();
-        comment.on('keyup', (event) => {
-            if(event.keyCode === 13) {
-                sendcomment.click();
-            }   
-        })
-    })
-
-
-    send_message.click(function(){
-        socket.emit("posts")
-    })
-
-//Listen on new_message
-socket.on("posts", (data) => {
+  //Listen on new_message
+  socket.on("posts", (data) => {
     console.log("ušao tu");
     console.log(data.post.postid);
-    postlist.prepend("<h5>" + data.post.username + "</h5> <textarea rows='5' cols='50' readonly>" + data.post.post + "</textarea>" + 
-    `<div class="selector"> <div class="commentlist" id="commentlist${data.postid}">
+    postlist.prepend(
+      "<h5>" +
+        data.post.username +
+        "</h5> <textarea rows='5' cols='50' readonly>" +
+        data.post.post +
+        "</textarea>" +
+        `<div class="selector"> <div class="commentlist" id="commentlist${data.postid}">
     </div>
     </br>
     <selection>
@@ -47,36 +47,36 @@ socket.on("posts", (data) => {
         <input type="text" id='comment'>
         <button id="sendcomment" type="submit" onclick="mySubmit()">Comment!</button> 
     </selection>
-</div>`);
+</div>`
+    );
 
-$(".selector").on('keyup click', function () {
-    commentlist = $(this).find(".commentlist");
-    comment = $(this).find("#comment")
-    postid = $(this).find("#postid").val();
-})
-})
+    $(".selector").on("keyup click", function () {
+      commentlist = $(this).find(".commentlist");
+      comment = $(this).find("#comment");
+      postid = $(this).find("#postid").val();
+    });
+  });
 
-
-socket.on("comments", (data) => {
+  socket.on("comments", (data) => {
     commentlist = "commentlist" + data.postid;
     commentlist = $(`#${commentlist}`);
     console.log(commentlist);
-    commentlist.append("<em>" + data.comment.username + "</em>" + `<input type='text' value= "${data.comment.message}" + readonly></br>`);
-})
-
-
+    commentlist.append(
+      "<em>" +
+        data.comment.username +
+        "</em>" +
+        `<input type='text' class="form-control-plaintext" value= "${data.comment.message}" + readonly></br>`
+    );
+  });
 });
 
-
 function mySubmit() {
-    if( comment.val().length > 0) { 
-    socket.emit("comments", {username: username.val(), comment: comment.val(), postid: postid});
+  if (comment.val().length > 0) {
+    socket.emit("comments", {
+      username: username.val(),
+      comment: comment.val(),
+      postid: postid,
+    });
     comment.val("");
-    }
-    else return; 
-
+  } else return;
 }
-
- 
-
-

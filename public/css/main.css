@@ -5,7 +5,7 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 main {
@@ -75,8 +75,6 @@ form {
 .main-header__item button:active {
   color: #ffeb3b;
 }
-
-
 
 #side-menu-toggle {
   border: 1px solid white;
