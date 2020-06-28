@@ -48,6 +48,11 @@ h1 {
   outline: none;
   border-bottom: 1px solid #e74c3c;
 }
+
+#pwFormat {
+  font-size: 10px;
+  color: #fff;
+}
 .btn {
   color: #fff;
   background-color: #e74c3c;

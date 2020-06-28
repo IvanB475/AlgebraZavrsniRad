@@ -8,6 +8,8 @@ const async = require("async");
 const Post = require("../models/post");
 const io = require("../socket");
 
+require("../middleware/index")();
+
 router.post("/signup", (req, res) => {
   const newUser = new User({
     username: req.body.username,
@@ -40,7 +42,7 @@ router.post("/logout", (req, res) => {
   console.log("successfully logged you out");
 });
 
-router.post("/settings", (req, res, next) => {
+router.post("/settings", isUser, (req, res, next) => {
   const update = { email: req.body.email, imageUrl: req.file.path };
   console.log(req.file);
   User.findByIdAndUpdate(req.user._id, update)
@@ -183,7 +185,7 @@ router.post("/resetpw/:token", (req, res) => {
   );
 });
 
-router.post("/sendFriendReq", (req, res) => {
+router.post("/sendFriendReq", isUser, (req, res) => {
   const friendId = req.body.wantedUserId;
   User.findById(friendId)
     .then((friend) => {
@@ -213,7 +215,7 @@ router.post("/acceptFriendReq", (req, res) => {
     });
 });
 
-router.post("/room-register", (req, res) => {
+router.post("/room-register", isUser, (req, res) => {
   if (req.body.room === req.body.kod) {
     User.findById(req.user._id, (err, user) => {
       if (err) {
@@ -229,11 +231,11 @@ router.post("/room-register", (req, res) => {
   }
 });
 
-router.post("/room", (req, res) => {
+router.post("/room", isUser, (req, res) => {
   res.render("index/room", { path: "index/room", name: req.body.room });
 });
 
-router.post("/newsfeed", (req, res) => {
+router.post("/newsfeed", isUser, (req, res) => {
   const post = new Post({
     author: req.user._id,
     username: req.user.username,
