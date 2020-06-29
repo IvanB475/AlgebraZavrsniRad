@@ -76,7 +76,7 @@ function mySubmit() {
       username: username.val(),
       comment: comment.val(),
       postid: postid,
-    });
+    });dw
     comment.val("");
   } else return;
 }

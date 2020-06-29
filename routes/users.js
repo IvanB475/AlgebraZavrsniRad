@@ -76,23 +76,6 @@ router.get("/user/:id", (req, res) => {
   });
 });
 
-/* router.get("/myfriends", async (req, res) => {
-  var friends = [];
-  User.findById(req.user._id).then(user => {
-    for( var i = 0; i < user.friends.length; i++) {
-     User.findById(user.friends[i].userId).then( friend => {
-       friends.push(friend);
-     })
-    }
-}).then(() => {
-  res.render("users/myfriendlist", {
-    users: 17555,
-    path: 'users/myfriendlist',
-    friends: friends
-  }) 
-})
-}) */
-
 router.get("/myfriends", isUser, async (req, res) => {
   var friends = [];
   User.findById(req.user._id)
