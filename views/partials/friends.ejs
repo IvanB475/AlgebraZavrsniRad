@@ -4,6 +4,7 @@
     <div class="chat">
         <% if( currentUser.friends.length > 0 ) { %>
             <% for(var i = 0; i < currentUser.friends.length; i++) { %>
+              <%  if( currentUser.friends[i].status == "friends") { %>
                 <div class="friends">
                     <div class="friend">
                         <div class="mini-img"><img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" width="40px" height="40px">
@@ -15,7 +16,7 @@
                     </div>
                 </div>
            <% } %>
-       <% } else { %>
+       <% } } else { %>
         <h5> You don't have any friends</h5>
         <% } %>
     </div>
