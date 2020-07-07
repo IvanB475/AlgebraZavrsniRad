@@ -2,7 +2,7 @@ function timeSince(x) {
   var days = 0;
   var hours = 0;
   var minutes = 0;
-  var time;
+  var postedBefore = "Posted ";
   if (x > 86400000) {
     days = Math.floor(x / 86400000);
     x = x % 86400000;
@@ -15,19 +15,19 @@ function timeSince(x) {
     minutes = Math.floor(x / 60000);
   }
 
-  if (days > 0 || hours > 0 || minutes > 0) {
-    time =
-      "Posted " +
-      days +
-      " days, " +
-      hours +
-      " hours," +
-      minutes +
-      " minutes ago";
-  } else {
-    time = "Posted less than a minute ago";
+  if (days > 0) {
+    postedBefore = postedBefore + days + " days, ";
   }
-  return time;
+  if (hours > 0) {
+    postedBefore = postedBefore + hours + " hours, ";
+  }
+  if (minutes > 0) {
+    postedBefore = postedBefore + minutes + " minutes ago";
+  }
+  if (days < 1 && hours < 1 && minutes < 1) {
+    postedBefore = "Posted less than a minute ago";
+  }
+  return postedBefore;
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
