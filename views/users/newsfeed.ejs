@@ -7,7 +7,6 @@
     }
 </style>
 </head>
-
 <body>
     <%- include('../partials/navbar') %>
     <%- include('../partials/friends') %>
@@ -23,6 +22,7 @@
     <% if (posts.length > 0) { %>
         <% for (var i = (posts.length - 1); i >= 0; i--) { %>
             <h5><%= posts[i].username %></h5>
+            <h5 class="timeSince"><%= (Date.now() - posts[i].time) %></h5>
         <textarea rows="5" cols="50" readonly><%= posts[i].post %></textarea>
         </br>
         <div class="selector"> 
@@ -48,6 +48,7 @@
         <% } %>
     <% } %>
 </div>
+    <script src="calculateTime.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/posts.js"></script>
 </body>
