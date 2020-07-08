@@ -81,7 +81,9 @@ router.get("/myfriends", isUser, async (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
       for (var i = 0; i < user.friends.length; i++) {
-        friends.push(user.friends[i].userId);
+        if (user.friends[i].status === "friends") {
+          friends.push(user.friends[i].userId);
+        }
       }
     })
     .then(() => {

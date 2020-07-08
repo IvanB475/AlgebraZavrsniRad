@@ -1,88 +1,95 @@
-
-
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    margin: 0px;
-    height: 100%;
+  margin: 0px;
+  height: 100%;
 }
 
 header {
-    text-align: center;
+  text-align: center;
 }
 
 h1 {
-    font-family: 'Comfortaa', sans-serif;
-    margin: 0px;
+  font-family: "Comfortaa", sans-serif;
+  margin: 0px;
 }
 
-div#change_username, section#input_zone {
-    border: 5px outset #8258FA;
+div#change_username,
+section#input_zone {
+  border: 5px outset #8258fa;
 }
 
 div#change_username {
-    height: 3%;
-    display: inline-block;
-    background-color: #BCA9F5;
+  height: 3%;
+  display: inline-block;
+  background-color: #bca9f5;
 }
 
 section#chatroom {
-    border: 5px inset #8258FA;
-    height: 65%;
-    overflow: auto;
+  border: 5px inset #8258fa;
+  height: 65%;
+  overflow: auto;
 }
 
 section#input_zone {
-    height: 7%;
-    text-align: center;
-    background-color: #BCA9F5;
+  height: 7%;
+  text-align: center;
+  background-color: #bca9f5;
+}
+
+section#input_zone_private {
+  width: 85%;
+  height: 7%;
+  text-align: center;
+  background-color: #bca9f5;
+  border: 5px outset #8258fa;
 }
 
 .vertical-align {
-    position: relative;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 input#username {
-    font-family: 'Comfortaa', sans-serif;
+  font-family: "Comfortaa", sans-serif;
 }
 
 input#message {
-    display: inline-block;
-    width: 73%;
-    height: 70%;
-    font-family: 'Comfortaa', sans-serif;
-    font-size: 2vh;
+  display: inline-block;
+  width: 73%;
+  height: 70%;
+  font-family: "Comfortaa", sans-serif;
+  font-size: 2vh;
 }
 
 button#send_message {
-    display: inline-block;
-    height: 70%;
-    width: 10%;
+  display: inline-block;
+  height: 70%;
+  width: 10%;
 }
 
 p.message {
-    margin: 0px;
-    width: 100%;
-    height: 40px;
-    font-size: 2vh;
-    font-family: 'Comfortaa', sans-serif;
-    padding: 1vh;
+  margin: 0px;
+  width: 100%;
+  height: 40px;
+  font-size: 2vh;
+  font-family: "Comfortaa", sans-serif;
+  padding: 1vh;
 }
 
 .message:nth-child(even) {
-    background-color: #81DAF5;
+  background-color: #81daf5;
 }
 
 .message:nth-child(odd) {
-    background-color: #81BEF7;
+  background-color: #81bef7;
 }
