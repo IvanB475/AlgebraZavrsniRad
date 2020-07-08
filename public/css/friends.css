@@ -1,7 +1,8 @@
 .friend_list {
   padding-left: 10px;
+  position: fixed;
+  right: 0px;
   background: #f8f8f8 none repeat scroll 0 0;
-  float: right;
   overflow: hidden;
   height: 100vh;
   width: 15%;
