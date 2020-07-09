@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const Post = require("../models/post");
+const post = require("../models/post");
 
 require("../middleware/index")();
 
@@ -105,6 +106,22 @@ router.get("/newsfeed", isUser, (req, res) => {
       path: "users/newsfeed",
       posts: allPosts,
     });
+  });
+});
+
+router.get("/userprofile/:id", (req, res) => {
+  User.findById(req.params.id, (err, founduser) => {
+    if (err) {
+      return res.redirect("/");
+    } else {
+      Post.find({ author: req.params.id }, (err, foundPosts) => {
+        res.render("users/userprofile", {
+          path: "users/userprofile",
+          user: founduser,
+          posts: foundPosts,
+        });
+      });
+    }
   });
 });
 

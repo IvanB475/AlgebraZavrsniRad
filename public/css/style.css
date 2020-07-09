@@ -25,6 +25,12 @@ section#input_zone {
   border: 5px outset #8258fa;
 }
 
+.chatTitle {
+  margin-top: 30px;
+  margin-left: 40%;
+  margin-bottom: 50px;
+}
+
 div#change_username {
   height: 3%;
   display: inline-block;
