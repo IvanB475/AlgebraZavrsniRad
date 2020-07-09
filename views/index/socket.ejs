@@ -21,6 +21,12 @@
    <%  }  else { %>
     Anonymous
     <% } %>" />
+    <input hidden id="imageUrl" type="url" value="<% if( currentUser !== undefined && currentUser.imageUrl !== undefined) { %>
+      <%= currentUser.imageUrl %>
+      <% console.log(currentUser.imageUrl) %>
+      <% } else  { %>
+         https://ptetutorials.com/images/user-profile.png
+         <% } %> "  />
 	<button id="send_username" type="button">Change username</button>
       </div>
     </section>

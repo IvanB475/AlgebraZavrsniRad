@@ -97,6 +97,7 @@ io.on("connection", (socket) => {
   socket.on("new_message", (data) => {
     io.sockets.emit("new_message", {
       message: data.message,
+      imageUrl: data.imageUrl,
       username: socket.username,
     });
   });
