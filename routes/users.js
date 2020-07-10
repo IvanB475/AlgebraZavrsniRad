@@ -77,7 +77,7 @@ router.get("/user/:id", (req, res) => {
   });
 });
 
-router.get("/myfriends", isUser, async (req, res) => {
+router.get("/myfriends", isUser, (req, res) => {
   var friends = [];
   User.findById(req.user._id)
     .then((user) => {
@@ -109,7 +109,7 @@ router.get("/newsfeed", isUser, (req, res) => {
   });
 });
 
-router.get("/userprofile/:id", (req, res) => {
+router.get("/:id", isUser, (req, res) => {
   User.findById(req.params.id, (err, founduser) => {
     if (err) {
       return res.redirect("/");

@@ -169,6 +169,11 @@ form {
   border-radius: 50%;
 }
 
+.profile_img_big {
+  border-radius: 50%;
+  border: 1px solid grey;
+}
+
 .btn:hover,
 .btn:active {
   background-color: #00695c;

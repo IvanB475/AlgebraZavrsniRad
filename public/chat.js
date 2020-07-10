@@ -41,7 +41,7 @@ $(function () {
     chatroom.append(
       "<p class='message'>" +
         data.username +
-        `<img src='${data.imageUrl}' alt='profileImg' width='30px' height='30px'>: ` +
+        `<img src='${data.imageUrl}' alt='profileImg' width='30px' height='30px'>  : ` +
         data.message +
         "</p>"
     );
