@@ -109,7 +109,7 @@ router.get("/newsfeed", isUser, (req, res) => {
   });
 });
 
-router.get("/:id", isUser, (req, res) => {
+router.get("/userprofile/:id", isUser, (req, res) => {
   User.findById(req.params.id, (err, founduser) => {
     if (err) {
       return res.redirect("/");
