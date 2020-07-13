@@ -23,7 +23,7 @@
                 </li>
             <% } else { %>
               <%  if( currentUser.imageUrl !== undefined ) {  %>
-                <img src="<%= currentUser.imageUrl %>" class="profile_img" width= "24px" height="24px"></img>
+                <img src="/<%= currentUser.imageUrl %>" class="profile_img" width= "24px" height="24px"></img>
            <% } else { %>
                 <img src="https://ptetutorials.com/images/user-profile.png" class="profile_img" width= "24px" height="24px"></img>
           <%  } %>

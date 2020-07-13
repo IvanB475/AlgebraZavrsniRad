@@ -22,7 +22,7 @@
     <%- include('../partials/friends') %>
     <div class="profileInfo">
         <% if ( user.imageUrl !== undefined ) { %>
-        <img src="<%= user.imageUrl %>" class="profile_img_big" height="200px" width="200px"/>
+        <img src="/<%= user.imageUrl %>" class="profile_img_big" height="200px" width="200px"/>
         <%  } else { %>
             <img src="https://ptetutorials.com/images/user-profile.png" class="profile_img_big" height="200px" width="200px"/>
             <% } %>
