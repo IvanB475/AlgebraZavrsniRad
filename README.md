@@ -26,3 +26,4 @@ app is on github: https://github.com/IvanB475/AlgebraZavrsniRad
 - Commenting on post
 - Seeing personal posts on personal profile
 - Requesting new password
+- Friend's profile page and friend's posts

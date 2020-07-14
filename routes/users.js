@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const Post = require("../models/post");
-const post = require("../models/post");
 
 require("../middleware/index")();
 
@@ -47,23 +46,25 @@ router.get("/findusers", isUser, (req, res) => {
   const regex = new RegExp(req.query.search, "gi");
   User.find({ username: regex }, (err, allUsers) => {
     var friends = [];
-    User.findById(req.user._id)
-      .then((user) => {
-        for (var i = 0; i < user.friends.length; i++) {
+  User.findById(req.user._id)
+    .then((user) => {
+      for (var i = 0; i < user.friends.length; i++) {
+        if (user.friends[i].status === "friends") {
           friends.push(user.friends[i].userId);
         }
-      })
-      .then(() => {
-        console.log(friends);
-        User.find({ _id: { $in: friends } }, (err, result) => {
-          console.log(result);
-          res.render("users/myfriendlist", {
-            users: allUsers,
-            path: "users/myfriendlist",
-            friends: result,
-          });
+      }
+    })
+    .then(() => {
+      console.log(friends);
+      User.find({ _id: { $in: friends } }, (err, result) => {
+        console.log(result);
+        res.render("users/myfriendlist", {
+          users: allUsers,
+          path: "users/myfriendlist",
+          friends: result,
         });
       });
+    });
   });
 });
 
@@ -110,14 +111,14 @@ router.get("/newsfeed", isUser, (req, res) => {
 });
 
 router.get("/userprofile/:id", isUser, (req, res) => {
-  User.findById(req.params.id, (err, founduser) => {
+  User.findById(req.params.id, (err, foundUser) => {
     if (err) {
       return res.redirect("/");
     } else {
       Post.find({ author: req.params.id }, (err, foundPosts) => {
         res.render("users/userprofile", {
           path: "users/userprofile",
-          user: founduser,
+          user: foundUser,
           posts: foundPosts,
         });
       });
