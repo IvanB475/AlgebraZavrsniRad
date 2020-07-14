@@ -1,5 +1,6 @@
 <%- include('../partials/header.ejs') %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script src="/calculateTime.js"></script>
 <style>
     .pageselector {
         max-width: 300px;
@@ -35,7 +36,10 @@
         margin-top: 25px;
         margin-bottom: 25px;
         text-align: center;
+
     }
+        
+        
 </style>
 </head>
 <body>
@@ -100,19 +104,24 @@
           </section>
         <% if (posts.length > 0) { %>
             <% for (var i = (posts.length - 1); i >= 0; i--) { %>
+                <br>
                 <h5><%= posts[i].username %></h5>
+                <em class="timeSince"><%= (Date.now() - posts[i].time) %></em>
             <textarea rows="5" cols="50" readonly><%= posts[i].post %></textarea>
             </br>
             <div class="selector"> 
             <div class="commentlist" id="commentlist<%= posts[i].id %>">
             <% if ( posts[i].comments.length > 0 &&  posts[i].comments.length < 6) { %> 
             <% for ( var y = 0; y <= (posts[i].comments.length-1); y++) { %>
-              <em><%= posts[i].comments[y].username %></em> <input type="text" class="form-control-plaintext"  value="<%= posts[i].comments[y].message %>" readonly> </br>
+                <br>
+              <em class="commentUsername"><%= posts[i].comments[y].username %></em> <input type="text" class="form-control-plaintext"  value="<%= posts[i].comments[y].message %>" readonly>
+              <em class="timeSince"><%= (Date.now() - posts[i].comments[y].time) %></em></br>
               <% } %>
               <% } else if(posts[i].comments.length >= 6) { %>
                 <% for ( var y = (posts[i].comments.length -1); y >= (posts[i].comments.length -6); y--) { %>
-                    <em><%= posts[i].comments[y].username %></em> <input type="text"  value="<%= posts[i].comments[y].message %>" readonly> </br>
-                <% } } else { } %>
+                    <em class="commentUsername"><%= posts[i].comments[y].username %></em> <input type="text"  value="<%= posts[i].comments[y].message %>" readonly>
+                    <em class="timeSince"><%= (Date.now() - posts[i].comments[y].time) %></em>
+                    <% } } else { } %>
             </div>
             </br>
             <selection>
@@ -121,6 +130,7 @@
                 <input type="hidden" id="postid" value="<%= posts[i].id %>">
                 <input type="text" id="comment">
                 <button id="sendcomment" type="submit" onclick="mySubmit()">Comment!</button> 
+                <br>
             </selection>
         </div>
             <% } %>
