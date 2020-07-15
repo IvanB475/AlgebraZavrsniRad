@@ -90,7 +90,12 @@ function createMemberElement(member) {
 
 function createMessageElement(text, member) {
   const el = document.createElement('div');
+  let img = document.createElement("img");
+  img.src = "https://ptetutorials.com/images/user-profile.png";
+  img.style.width = "24px";
+  img.style.height = "24px";
   el.appendChild(createMemberElement(member));
+  el.appendChild(img);
   el.appendChild(document.createTextNode(text));
   el.className = 'message';
   return el;
