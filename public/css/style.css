@@ -21,6 +21,7 @@ h1 {
 }
 
 div#change_username,
+div#change_color,
 section#input_zone {
   border: 5px outset #8258fa;
 }
@@ -31,10 +32,20 @@ section#input_zone {
   margin-bottom: 50px;
 }
 
+div#change_color,
 div#change_username {
+  width: 400px;
   height: 3%;
   display: inline-block;
   background-color: #bca9f5;
+}
+
+#color {
+  width: 230px;
+}
+
+#username {
+  width: 230px;
 }
 
 section#chatroom {

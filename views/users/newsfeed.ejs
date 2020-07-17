@@ -30,15 +30,18 @@
         <div class="commentlist" id="commentlist<%= posts[i].id %>">
         <% if ( posts[i].comments.length > 0 &&  posts[i].comments.length < 6) { %> 
         <% for ( var y = 0; y <= (posts[i].comments.length-1); y++) { %>
-          <em><%= posts[i].comments[y].username %></em> <br>
-          <em class="timeSince"><%= (Date.now() - posts[i].comments[y].time) %></em> <br>
-           <input type="text" class="form-control-plaintext"  value="<%= posts[i].comments[y].message %>" readonly> </br>
+          <em><%= posts[i].comments[y].username %></em>
+           <input type="text" class="form-control-plaintext"  value="<%= posts[i].comments[y].message %>" readonly>
+           <em class="timeSince"><%= (Date.now() - posts[i].comments[y].time) %></em>
+        </br>
+        </br>
           <% } %>
           <% } else if(posts[i].comments.length >= 6) { %>
             <% for ( var y = (posts[i].comments.length -1); y >= (posts[i].comments.length -6); y--) { %>
-                <em><%= posts[i].comments[y].username %></em> <br>
-                <em class="timeSince"><%= (Date.now() - posts[i].comments[y].time) %></em> <br>
-                <input type="text"  value="<%= posts[i].comments[y].message %>" readonly> </br>
+                <br>
+                <em><%= posts[i].comments[y].username %></em>
+                <input type="text" class="form-control-plaintext"  value="<%= posts[i].comments[y].message %>" readonly>
+                <em class="timeSince"><%= (Date.now() - posts[i].comments[y].time) %></em>
             <% } } else { } %>
         </div>
         </br>

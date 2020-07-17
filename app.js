@@ -99,6 +99,7 @@ io.on("connection", (socket) => {
       message: data.message,
       imageUrl: data.imageUrl,
       username: socket.username,
+      color: socket.color
     });
   });
 
@@ -112,6 +113,10 @@ io.on("connection", (socket) => {
   socket.on("change_username", (data) => {
     socket.username = data.username;
   });
+
+  socket.on("change_color", (data) => {
+    socket.color = data.color;
+  })
 
   socket.on("privateconn", (data) => {
     Room.find()

@@ -9,6 +9,9 @@ var send_username = $("#send_username");
 var chatroom = $("#chatroom");
 var feedback = $("#feedback");
 var imageUrl = $("#imageUrl");
+var color = $("#color");
+var send_color = $("#send_color");
+
 
 document.addEventListener("DOMContentLoaded", function (event) {
   console.log("workd");
@@ -39,13 +42,17 @@ $(function () {
   socket.on("new_message", (data) => {
     feedback.html("");
     chatroom.append(
-      "<p class='message'>" +
+      `<p style='color:${data.color}'>` +
         data.username +
         `<img src='${data.imageUrl}' alt='profileImg' width='30px' height='30px'>  : ` +
         data.message +
         "</p>"
     );
   });
+
+  send_color.click(function () {
+    socket.emit("change_color", { color: color.val() });
+  })
 
   //Emit a username
   send_username.click(function () {
