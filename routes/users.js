@@ -89,9 +89,7 @@ router.get("/myfriends", isUser, (req, res) => {
       }
     })
     .then(() => {
-      console.log(friends);
       User.find({ _id: { $in: friends } }, (err, result) => {
-        console.log(result);
         res.render("users/myfriendlist", {
           users: 17555,
           path: "users/myfriendlist",

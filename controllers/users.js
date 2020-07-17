@@ -21,7 +21,6 @@ router.post("/signup", (req, res) => {
       res.send(err);
     } else {
       passport.authenticate("local")(req, res, () => {
-        console.log("uspješna registracija");
         res.render("index/landing", { path: "index/landing", users: 0 });
       });
     }
@@ -48,7 +47,6 @@ router.post("/settings", isUser, (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, update)
     .then((result) => {
       res.render("index/landing", { path: "/", users: 0 });
-      console.log(result);
     })
     .catch((err) => {
       const error = new Error(err);
@@ -192,7 +190,7 @@ router.post("/sendFriendReq", isUser, (req, res) => {
       return req.user.addToFriends(friend);
     })
     .then(() => {
-      res.render("index/landing", { users: 0, path: "/" });
+      res.render("users/myfriendlist", { users: 0, friends:17555, path: "users/myfriendlist" });
     })
     .catch(() => {
       console.log("Failed");
@@ -201,8 +199,6 @@ router.post("/sendFriendReq", isUser, (req, res) => {
 
 router.post("/acceptFriendReq", (req, res) => {
   const friendId = req.body.acceptedFriendId;
-  console.log(friendId);
-  console.log(req.user._id);
   User.findById(friendId)
     .then((friend) => {
       return req.user.acceptFriend(friend);
@@ -233,7 +229,6 @@ router.post("/room-register", isUser, (req, res) => {
 
 router.post("/room", isUser, (req, res) => {
   var room = req.body.room;
-  console.log(room);
   User.findById(req.user._id, (err, user) => {
     if(err) {
       console.log(err);

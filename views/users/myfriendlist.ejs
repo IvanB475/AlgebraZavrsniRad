@@ -11,7 +11,6 @@
     <%- include('../partials/friends') %>
     <h1>My friends</h1>
     <ul>
-        <% console.log(friends.length) %>
         <% if (friends.length > 0) { %> 
         <% for ( var i = 0; i < friends.length; i++) { %>
          <div class="friendBox">
@@ -41,11 +40,6 @@
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <input type="hidden" name="wantedUserId" value="<%= user.id %>">
         <button type="submit">Add friend</button>
-       </form>
-       <form action="/acceptFriendReq" method="POST">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <input type="hidden" name="acceptedFriendId" value="<%= user.id %>">
-        <button type="submit">Accept friend</button>
        </form>
         <% } %>
        </ul>
