@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const User = require("../models/user");
 require("../middleware/index")();
 
 router.get("/", (req, res) => {
@@ -15,7 +16,24 @@ router.get("/room-register", isUser, (req, res) => {
 });
 
 router.get("/room", isUser, (req, res) => {
-  res.render("index/room", { path: "index/room" });
+  var room = req.body.name;
+  console.log(room);
+  User.findById(req.user._id, (err, user) => {
+    if(err) {
+      console.log(err);
+    }
+    else { 
+      if( user.rooms.includes(room) ){
+      console.log("hi");
+      console.log(user.rooms);
+      res.render("index/rooms", { path: "index/rooms" });
+      }
+      else {
+        console.log("hey");
+        res.write("You are not authorized to enter this room");
+      }
+    }
+  })
 });
 
 router.get("/scaledronechat", (req, res) => {

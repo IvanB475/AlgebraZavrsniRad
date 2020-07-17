@@ -223,7 +223,7 @@ router.post("/room-register", isUser, (req, res) => {
       } else {
         user.rooms.push(req.body.room);
         user.save();
-        res.render("index/socket", { path: "index/socket" });
+        res.render("index/room", { path: "index/room", name: req.body.room });
       }
     });
   } else {
@@ -232,7 +232,21 @@ router.post("/room-register", isUser, (req, res) => {
 });
 
 router.post("/room", isUser, (req, res) => {
-  res.render("index/room", { path: "index/room", name: req.body.room });
+  var room = req.body.room;
+  console.log(room);
+  User.findById(req.user._id, (err, user) => {
+    if(err) {
+      console.log(err);
+    }
+    else { 
+      if( user.rooms.includes(room) ){
+      res.render("index/room", { path: "index/room", name: req.body.room });
+      }
+      else {
+        res.write("<h1>You are not authorized to enter this room</h1>");
+      }
+    }
+  })
 });
 
 router.post("/newsfeed", isUser, (req, res) => {
