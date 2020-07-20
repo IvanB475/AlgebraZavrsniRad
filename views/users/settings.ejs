@@ -69,7 +69,8 @@
                 <form action="/acceptFriendReq" method="POST">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <input type="hidden" name="acceptedFriendId" value="<%= friend.userId %>">
-                    <button type="submit">Accept friend</button>
+                    <button name="answerStatus" type="submit" value="Accept">Accept friend</button>
+                    <button name="answerStatus" type="submit" value="Decline">Decline friend</button>
                 </form>
             </li>
             <% }%>

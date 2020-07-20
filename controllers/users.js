@@ -199,10 +199,17 @@ router.post("/sendFriendReq", isUser, (req, res) => {
 
 router.post("/acceptFriendReq", (req, res) => {
   const friendId = req.body.acceptedFriendId;
+  console.log(req.body.answerStatus);
   User.findById(friendId)
     .then((friend) => {
+      if(req.body.answerStatus === "Accept") { 
       return req.user.acceptFriend(friend);
-    })
+    } else if ( req.body.answerStatus === "Decline") {
+      return req.user.declineFriend(friend);
+    } else { 
+      res.write("<h1> Error occured </h1>");
+    }
+  })
     .then(() => {
       res.render("index/landing", { users: 0, path: "/" });
     })

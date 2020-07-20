@@ -75,5 +75,20 @@ userSchema.methods.acceptFriend = function(friend) {
 }
 
 
+userSchema.methods.declineFriend = function(friend) {
+  this.friends.filter( user => {
+    if(user.userId.toString() === friend._id.toString()) {
+      user.status = "refused";
+    }
+  })
+  friend.friends.filter( user => { 
+    if(user.userId.toString() === this._id.toString()) {
+      user.status = "declined";
+    }
+  })
+  friend.save();
+  return this.save();
+}
+
 
 module.exports = mongoose.model("User", userSchema);
