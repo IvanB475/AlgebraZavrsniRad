@@ -44,7 +44,13 @@ router.get("/resetpw/:token", (req, res) => {
 
 router.get("/findusers", isUser, (req, res) => {
   const regex = new RegExp(req.query.search, "gi");
+  let foundUsers = [];
   User.find({ username: regex }, (err, allUsers) => {
+    allUsers.forEach( user => {
+      if( user.privacy !== "Private"){
+        foundUsers.push(user);
+      }
+    })
     var friends = [];
   User.findById(req.user._id)
     .then((user) => {
@@ -59,7 +65,7 @@ router.get("/findusers", isUser, (req, res) => {
       User.find({ _id: { $in: friends } }, (err, result) => {
         console.log(result);
         res.render("users/myfriendlist", {
-          users: allUsers,
+          users: foundUsers,
           path: "users/myfriendlist",
           friends: result,
         });
