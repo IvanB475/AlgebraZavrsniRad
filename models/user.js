@@ -13,6 +13,9 @@ const userSchema = new Schema({
   imageUrl: {
     type: String
   },
+  privacy: {
+    type: String
+  },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   status: {

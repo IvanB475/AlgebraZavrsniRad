@@ -42,7 +42,14 @@ router.post("/logout", (req, res) => {
 });
 
 router.post("/settings", isUser, (req, res, next) => {
-  const update = { email: req.body.email, imageUrl: req.file.path };
+  let update;
+  if ( req.file && !req.body.userPrivacy) { 
+  update = { email: req.body.email, imageUrl: req.file.path };
+  } else if( req.file && req.body.userPrivacy) {
+    update = { email: req.body.email, imageUrl: req.file.path, privacy: req.body.userPrivacy}
+  } else {
+    update = { email: req.body.email, privacy: req.body.userPrivacy }
+  }
   console.log(req.file);
   User.findByIdAndUpdate(req.user._id, update)
     .then((result) => {

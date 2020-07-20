@@ -82,7 +82,16 @@
         <h3>Settings</h3>
             <form action="/settings" method="POST" enctype="multipart/form-data">
                 <div>
-                    <label for="email">Email</label>
+                    <label for="userPrivacy">Privacy: </label>
+                    <button name="userPrivacy" class="btn btn-warning" value="Public" <% if(currentUser.privacy === 'Open') { %> 
+                        disabled 
+                    <% } %>>Public</button>
+                    <button name="userPrivacy" class="btn btn-success" value="Private" <% if(currentUser.privacy === 'Private') { %>
+                        disabled 
+                    <% } %>>Private</button>
+                </div>
+                <div>
+                    <label for="email">Email: </label>
                     <input type="text" name="email" value="<%= currentUser.email %>">
                 </div>
                 <label for="image">Profile picture</label>
