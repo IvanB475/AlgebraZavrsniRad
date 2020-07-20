@@ -197,17 +197,22 @@ router.post("/sendFriendReq", isUser, (req, res) => {
     });
 });
 
-router.post("/acceptFriendReq", (req, res) => {
-  const friendId = req.body.acceptedFriendId;
-  console.log(req.body.answerStatus);
+router.post("/handleFriend", (req, res) => {
+  const friendId = req.body.handleFriendId;
+  console.log(req.body.handleFriend);
   User.findById(friendId)
     .then((friend) => {
-      if(req.body.answerStatus === "Accept") { 
-      return req.user.acceptFriend(friend);
-    } else if ( req.body.answerStatus === "Decline") {
-      return req.user.declineFriend(friend);
-    } else { 
-      res.write("<h1> Error occured </h1>");
+    switch(req.body.handleFriend) {
+      case "Accept":
+        return req.user.acceptFriend(friend);
+      case "Decline":
+        return req.user.declineFriend(friend);
+      case "Block":
+        return req.user.blockFriend(friend);
+      case "Unfriend":
+        return req.user.unfriendFriend(friend);
+      default:
+        res.write("<h1> Error occured </h1>");
     }
   })
     .then(() => {

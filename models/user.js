@@ -78,13 +78,45 @@ userSchema.methods.acceptFriend = function(friend) {
 userSchema.methods.declineFriend = function(friend) {
   this.friends.filter( user => {
     if(user.userId.toString() === friend._id.toString()) {
-      user.status = "refused";
+      user.status = "declined";
     }
   })
   friend.friends.filter( user => { 
     if(user.userId.toString() === this._id.toString()) {
+      user.status = "refused friendship";
+    }
+  })
+  friend.save();
+  return this.save();
+}
+
+userSchema.methods.blockFriend = function(friend) {
+  this.friends.filter( user => {
+    if ( user.userId.toString() === friend._id.toString()) {
+      user.status = "blocked";
+    } 
+  }) 
+  friend.friends.filter( user => {
+    if(user.userId.toString() === this._id.toString()) {
+      user.status = "got blocked";
+    }
+  })
+
+  friend.save();
+  return this.save();
+}
+
+
+userSchema.methods.unfriendFriend = function(friend) {
+  this.friends.filter( user => {
+    if( user.userId.toString() === friend._id.toString()) {
       user.status = "declined";
     }
+    friend.friends.filter( user => {
+      if(user.userId.toString() === this._id.toString()) {
+        user.status = "refused friendship";
+      }
+    })
   })
   friend.save();
   return this.save();

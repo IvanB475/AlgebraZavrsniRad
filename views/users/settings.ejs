@@ -66,11 +66,11 @@
             <li>
                 <img src="<%= friend.imageUrl %>" class="profile_img" width= "25px" height="25px"></img>
                 <%= friend.username %>
-                <form action="/acceptFriendReq" method="POST">
+                <form action="/handleFriend" method="POST">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                    <input type="hidden" name="acceptedFriendId" value="<%= friend.userId %>">
-                    <button name="answerStatus" type="submit" value="Accept">Accept friend</button>
-                    <button name="answerStatus" type="submit" value="Decline">Decline friend</button>
+                    <input type="hidden" name="handleFriendId" value="<%= friend.userId %>">
+                    <button name="handleFriend" type="submit" value="Accept">Accept friend</button>
+                    <button name="handleFriend" type="submit" value="Decline">Decline friend</button>
                 </form>
             </li>
             <% }%>
