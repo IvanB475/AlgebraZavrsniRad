@@ -24,12 +24,9 @@ router.get("/room", isUser, (req, res) => {
     }
     else { 
       if( user.rooms.includes(room) ){
-      console.log("hi");
-      console.log(user.rooms);
       res.render("index/rooms", { path: "index/rooms" });
       }
       else {
-        console.log("hey");
         res.write("You are not authorized to enter this room");
       }
     }

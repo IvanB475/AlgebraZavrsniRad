@@ -204,6 +204,8 @@ router.post("/sendFriendReq", isUser, (req, res) => {
     });
 });
 
+
+
 router.post("/handleFriend", (req, res) => {
   const friendId = req.body.handleFriendId;
   console.log(req.body.handleFriend);

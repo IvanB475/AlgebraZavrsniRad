@@ -47,10 +47,14 @@ router.get("/findusers", isUser, (req, res) => {
   let foundUsers = [];
   User.find({ username: regex }, (err, allUsers) => {
     allUsers.forEach( user => {
-      if( user.privacy !== "Private"){
-        foundUsers.push(user);
-      }
-    })
+        if( user.friends.some(friend => friend.userId.toString() === req.user._id.toString() && (friend.status === "declined" || friend.status ==="blocked"))){
+            console.log("do not display this user");
+          } else {
+            if( user.privacy !== "Private"){ 
+            foundUsers.push(user);
+          }
+        } 
+      })
     var friends = [];
   User.findById(req.user._id)
     .then((user) => {
@@ -61,9 +65,7 @@ router.get("/findusers", isUser, (req, res) => {
       }
     })
     .then(() => {
-      console.log(friends);
       User.find({ _id: { $in: friends } }, (err, result) => {
-        console.log(result);
         res.render("users/myfriendlist", {
           users: foundUsers,
           path: "users/myfriendlist",
