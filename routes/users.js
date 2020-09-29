@@ -107,13 +107,25 @@ router.get("/myfriends", isUser, (req, res) => {
     });
 });
 
-router.get("/newsfeed", isUser, (req, res) => {
-  Post.find().then((allPosts) => {
+router.get("/newsfeed", isUser, async (req, res) => {
+  console.time("test");
+
+  try {
+    const posts = await Post.find();
+    console.timeEnd("test");
+    res.render("users/newsfeed", {
+      path: "users/newsfeed",
+      posts: posts,
+    });
+  } catch {
+    console.log("error occured");
+  }
+/*   Post.find().then((allPosts) => {
     res.render("users/newsfeed", {
       path: "users/newsfeed",
       posts: allPosts,
     });
-  });
+  }); */
 });
 
 router.get("/userprofile/:id", isUser, (req, res) => {
