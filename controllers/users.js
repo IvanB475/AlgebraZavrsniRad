@@ -10,12 +10,13 @@ const io = require("../socket");
 
 require("../middleware/index")();
 
-router.post("/signup", (req, res) => {
+router.post("/signup", async (req, res) => {
   const newUser = new User({
     username: req.body.username,
     email: req.body.email,
     status: "user",
   });
+
   User.register(newUser, req.body.password, (err, user) => {
     if (err) {
       res.send(err);
@@ -41,7 +42,7 @@ router.post("/logout", (req, res) => {
   console.log("successfully logged you out");
 });
 
-router.post("/settings", isUser, (req, res, next) => {
+router.post("/settings", isUser, async (req, res, next) => {
   let update;
   if ( req.file && !req.body.userPrivacy) { 
   update = { email: req.body.email, imageUrl: req.file.path };
@@ -50,8 +51,18 @@ router.post("/settings", isUser, (req, res, next) => {
   } else {
     update = { email: req.body.email, privacy: req.body.userPrivacy }
   }
-  console.log(req.file);
-  User.findByIdAndUpdate(req.user._id, update)
+
+  try {
+    await User.findByIdAndUpdate(req.user._id, update);
+    res.render("index/landing", { path: "/", users: 0 });
+  } catch(e) {
+    const error = new Error(e);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+
+
+/*   User.findByIdAndUpdate(req.user._id, update)
     .then((result) => {
       res.render("index/landing", { path: "/", users: 0 });
     })
@@ -59,7 +70,7 @@ router.post("/settings", isUser, (req, res, next) => {
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
-    });
+    }); */
 });
 
 router.post("/resetpw", (req, res, next) => {
@@ -190,9 +201,18 @@ router.post("/resetpw/:token", (req, res) => {
   );
 });
 
-router.post("/sendFriendReq", isUser, (req, res) => {
+router.post("/sendFriendReq", isUser, async (req, res) => {
   const friendId = req.body.wantedUserId;
-  User.findById(friendId)
+
+  try {
+    const friend = await User.findById(friendId);
+    req.user.addToFriends(friend);
+    res.render("users/myfriendlist", { users: 0, friends:17555, path: "users/myfriendlist" });
+  } catch(e) {
+    console.log(e);
+  }
+
+ /*  User.findById(friendId)
     .then((friend) => {
       return req.user.addToFriends(friend);
     })
@@ -201,14 +221,15 @@ router.post("/sendFriendReq", isUser, (req, res) => {
     })
     .catch(() => {
       console.log("Failed");
-    });
+    }); */
 });
 
 
 
 router.post("/handleFriend", (req, res) => {
   const friendId = req.body.handleFriendId;
-  console.log(req.body.handleFriend);
+  
+
   User.findById(friendId)
     .then((friend) => {
     switch(req.body.handleFriend) {
@@ -273,7 +294,7 @@ router.post("/newsfeed", isUser, (req, res) => {
   });
   post.save();
   io.getIO().emit("posts", { post: post, postid: post._id });
-  res.redirect("/newsfeed");
+  // res.redirect("/newsfeed");
 });
 
 router.post("/privatePost", (req, res) => {
@@ -285,6 +306,6 @@ router.post("/privatePost", (req, res) => {
   post.save();
   io.getIO().emit("privatePost", { post: post, postid: post._id });
   io.getIO().emit("posts", { post: post, postid: post._id });
-  res.redirect("/settings");
+  res.redirect('back');
 });
 module.exports = router;

@@ -9,6 +9,7 @@ var comment = $("#comment");
 var postid = $("#postid");
 var commentlist = $(".commentlist");
 var sendcomment = $("#sendcomment");
+var newpost = $('#newpost');
 
 $(function () {
   $(".selector").on("keyup click", function () {
@@ -55,6 +56,7 @@ $(function () {
       comment = $(this).find("#comment");
       postid = $(this).find("#postid").val();
     });
+    newpost.val("");
   });
 
   socket.on("comments", (data) => {
