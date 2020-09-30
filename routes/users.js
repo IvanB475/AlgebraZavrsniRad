@@ -210,11 +210,9 @@ router.get("/myfriends", isUser, async (req, res) => {
 });
 
 router.get("/newsfeed", isUser, async (req, res) => {
-  console.time("test");
-
+  
   try {
     const posts = await Post.find();
-    console.timeEnd("test");
     res.render("users/newsfeed", {
       path: "users/newsfeed",
       posts: posts,
@@ -230,8 +228,22 @@ router.get("/newsfeed", isUser, async (req, res) => {
   }); */
 });
 
-router.get("/userprofile/:id", isUser, (req, res) => {
-  User.findById(req.params.id, (err, foundUser) => {
+router.get("/userprofile/:id", isUser, async (req, res) => {
+
+  try { 
+    const user = await User.findById(req.params.id);
+    const posts = await Post.find({author: req.params.id});
+    res.render("users/userprofile", {
+      path: "users/userprofile",
+      user: user,
+      posts: posts,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+
+
+  /* User.findById(req.params.id, (err, foundUser) => {
     if (err) {
       return res.redirect("/");
     } else {
@@ -243,7 +255,7 @@ router.get("/userprofile/:id", isUser, (req, res) => {
         });
       });
     }
-  });
+  }); */
 });
 
 module.exports = router;
