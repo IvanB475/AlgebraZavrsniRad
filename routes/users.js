@@ -13,21 +13,48 @@ router.get("/login", (req, res) => {
   res.render("users/login", { path: "users/login" });
 });
 
-router.get("/settings", isUser, (req, res) => {
-  Post.find({ author: req.user._id }).then((allPosts) => {
+router.get("/settings", isUser, async (req, res) => {
+
+  try {
+    const posts = await Post.find({ author: req.user._id });
+    res.render("users/settings", {
+      posts: posts,
+      path: "users/settings",
+    });
+  } catch(e) {
+    console.log("error occured");
+  }
+
+/*   Post.find({ author: req.user._id }).then((allPosts) => {
     res.render("users/settings", {
       posts: allPosts,
       path: "users/settings",
     });
-  });
+  }); */
 });
 
 router.get("/resetpw", (req, res) => {
   res.render("users/resetpw", { path: "users/resetpw" });
 });
 
-router.get("/resetpw/:token", (req, res) => {
-  User.findOne(
+router.get("/resetpw/:token", async (req, res) => {
+
+    try {
+      const user = await User.findOne(
+        {
+          resetPasswordToken: req.params.token,
+          resetPasswordExpires: { $gt: Date.now() },
+        });
+      if(!user) {
+        console.log("token is invalid");
+      } else {
+        res.render("users/setnewpw", { token: req.params.token });
+      }
+    } catch(e) {
+      console.log("something went wrong");
+    }
+
+/*   User.findOne(
     {
       resetPasswordToken: req.params.token,
       resetPasswordExpires: { $gt: Date.now() },
@@ -39,13 +66,54 @@ router.get("/resetpw/:token", (req, res) => {
       }
       res.render("users/setnewpw", { token: req.params.token });
     }
-  );
+  ); */
 });
 
-router.get("/findusers", isUser, (req, res) => {
+router.get("/findusers", isUser, async (req, res) => {
   const regex = new RegExp(req.query.search, "gi");
   let foundUsers = [];
-  User.find({ username: regex }, (err, allUsers) => {
+  let friends = [];
+
+  try { 
+    const users = await User.find({username: regex});
+    users.forEach( user => { 
+      if( user.friends.some(friend => friend.userId.toString() === req.user._id.toString() && (friend.status === "declined" || friend.status ==="blocked" || friend.status ==="friends"))){
+          console.log("do not display this user");
+      } else {
+        if( user.privacy !== "Private"){ 
+          foundUsers.push(user);
+        }
+      }
+    });
+  } catch(e) {
+    console.log(e);
+  }
+
+  try { 
+    const user = await User.findById(req.user._id);
+    for (friend of user.friends) {
+      if (friend.status === "friends") {
+        friends.push(friend.userId);
+      }
+    }
+  } catch(e) {
+    console.log(e);
+  }
+
+
+  try { 
+    const allFriends = await User.find({ _id: { $in: friends } });
+    res.render("users/myfriendlist", {
+      users: foundUsers,
+      path: "users/myfriendlist",
+      friends: allFriends,
+    });
+  } catch(e) {
+    console.log(e);
+  }
+
+});
+/*   User.find({ username: regex }, (err, allUsers) => {
     allUsers.forEach( user => {
         if( user.friends.some(friend => friend.userId.toString() === req.user._id.toString() && (friend.status === "declined" || friend.status ==="blocked"))){
             console.log("do not display this user");
@@ -74,21 +142,55 @@ router.get("/findusers", isUser, (req, res) => {
       });
     });
   });
-});
+}); */
 
-router.get("/user/:id", (req, res) => {
-  User.findById(req.params.id, (err, founduser) => {
+router.get("/user/:id", async (req, res) => {
+
+  try {
+    const user = await User.findById(req.params.id);
+    res.render("users/user", { path: "users/user", user: user });
+  } catch(e) {
+    console.log(e);
+  }
+
+
+
+/*   User.findById(req.params.id, (err, founduser) => {
     if (err) {
       return res.redirect("/");
     } else {
       res.render("users/user", { path: "users/user", user: founduser });
     }
-  });
+  }); */
 });
 
-router.get("/myfriends", isUser, (req, res) => {
+router.get("/myfriends", isUser, async (req, res) => {
   var friends = [];
-  User.findById(req.user._id)
+
+  try { 
+    const user = await User.findById(req.user._id);
+    for (friend of user.friends) {
+      if (friend.status === "friends") {
+        friends.push(friend.userId);
+      };
+    }
+  } catch(e){
+    console.log(e);
+  }
+
+  try { 
+    const allFriends = await User.find({ _id: { $in: friends }});
+    res.render("users/myfriendlist", {
+      users: 17555,
+      path: "users/myfriendlist",
+      friends: allFriends,
+    });
+  } catch(e) {
+    console.log(e);
+  }
+
+
+/*   User.findById(req.user._id)
     .then((user) => {
       for (var i = 0; i < user.friends.length; i++) {
         if (user.friends[i].status === "friends") {
@@ -104,7 +206,7 @@ router.get("/myfriends", isUser, (req, res) => {
           friends: result,
         });
       });
-    });
+    }); */
 });
 
 router.get("/newsfeed", isUser, async (req, res) => {
