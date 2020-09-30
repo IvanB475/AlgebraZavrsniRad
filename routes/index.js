@@ -15,24 +15,6 @@ router.get("/room-register", isUser, (req, res) => {
   res.render("index/rooms", { path: "index/rooms" });
 });
 
-router.get("/room", isUser, (req, res) => {
-  var room = req.body.name;
-  console.log(room);
-  User.findById(req.user._id, (err, user) => {
-    if(err) {
-      console.log(err);
-    }
-    else { 
-      if( user.rooms.includes(room) ){
-      res.render("index/rooms", { path: "index/rooms" });
-      }
-      else {
-        res.write("You are not authorized to enter this room");
-      }
-    }
-  })
-});
-
 router.get("/scaledronechat", (req, res) => {
   res.render("index/scaledronechat", { path: "index/scaledronechat" });
 });
