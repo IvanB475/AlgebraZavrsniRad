@@ -60,17 +60,6 @@ router.post("/settings", isUser, async (req, res, next) => {
     error.httpStatusCode = 500;
     return next(error);
   }
-
-
-/*   User.findByIdAndUpdate(req.user._id, update)
-    .then((result) => {
-      res.render("index/landing", { path: "/", users: 0 });
-    })
-    .catch((err) => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
-    }); */
 });
 
 router.post("/resetpw", (req, res, next) => {
@@ -212,16 +201,6 @@ router.post("/sendFriendReq", isUser, async (req, res) => {
     console.log(e);
   }
 
- /*  User.findById(friendId)
-    .then((friend) => {
-      return req.user.addToFriends(friend);
-    })
-    .then(() => {
-      res.render("users/myfriendlist", { users: 0, friends:17555, path: "users/myfriendlist" });
-    })
-    .catch(() => {
-      console.log("Failed");
-    }); */
 });
 
 
@@ -294,7 +273,6 @@ router.post("/newsfeed", isUser, (req, res) => {
   });
   post.save();
   io.getIO().emit("posts", { post: post, postid: post._id });
-  // res.redirect("/newsfeed");
 });
 
 router.post("/privatePost", (req, res) => {

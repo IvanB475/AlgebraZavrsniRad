@@ -25,12 +25,6 @@ router.get("/settings", isUser, async (req, res) => {
     console.log("error occured");
   }
 
-/*   Post.find({ author: req.user._id }).then((allPosts) => {
-    res.render("users/settings", {
-      posts: allPosts,
-      path: "users/settings",
-    });
-  }); */
 });
 
 router.get("/resetpw", (req, res) => {
@@ -54,19 +48,6 @@ router.get("/resetpw/:token", async (req, res) => {
       console.log("something went wrong");
     }
 
-/*   User.findOne(
-    {
-      resetPasswordToken: req.params.token,
-      resetPasswordExpires: { $gt: Date.now() },
-    },
-    (err, user) => {
-      if (!user) {
-        console.log("Reset token is invalid");
-        return res.redirect("/");
-      }
-      res.render("users/setnewpw", { token: req.params.token });
-    }
-  ); */
 });
 
 router.get("/findusers", isUser, async (req, res) => {
@@ -113,36 +94,7 @@ router.get("/findusers", isUser, async (req, res) => {
   }
 
 });
-/*   User.find({ username: regex }, (err, allUsers) => {
-    allUsers.forEach( user => {
-        if( user.friends.some(friend => friend.userId.toString() === req.user._id.toString() && (friend.status === "declined" || friend.status ==="blocked"))){
-            console.log("do not display this user");
-          } else {
-            if( user.privacy !== "Private"){ 
-            foundUsers.push(user);
-          }
-        } 
-      })
-    var friends = [];
-  User.findById(req.user._id)
-    .then((user) => {
-      for (var i = 0; i < user.friends.length; i++) {
-        if (user.friends[i].status === "friends") {
-          friends.push(user.friends[i].userId);
-        }
-      }
-    })
-    .then(() => {
-      User.find({ _id: { $in: friends } }, (err, result) => {
-        res.render("users/myfriendlist", {
-          users: foundUsers,
-          path: "users/myfriendlist",
-          friends: result,
-        });
-      });
-    });
-  });
-}); */
+
 
 router.get("/user/:id", async (req, res) => {
 
@@ -153,15 +105,6 @@ router.get("/user/:id", async (req, res) => {
     console.log(e);
   }
 
-
-
-/*   User.findById(req.params.id, (err, founduser) => {
-    if (err) {
-      return res.redirect("/");
-    } else {
-      res.render("users/user", { path: "users/user", user: founduser });
-    }
-  }); */
 });
 
 router.get("/myfriends", isUser, async (req, res) => {
@@ -188,25 +131,6 @@ router.get("/myfriends", isUser, async (req, res) => {
   } catch(e) {
     console.log(e);
   }
-
-
-/*   User.findById(req.user._id)
-    .then((user) => {
-      for (var i = 0; i < user.friends.length; i++) {
-        if (user.friends[i].status === "friends") {
-          friends.push(user.friends[i].userId);
-        }
-      }
-    })
-    .then(() => {
-      User.find({ _id: { $in: friends } }, (err, result) => {
-        res.render("users/myfriendlist", {
-          users: 17555,
-          path: "users/myfriendlist",
-          friends: result,
-        });
-      });
-    }); */
 });
 
 router.get("/newsfeed", isUser, async (req, res) => {
@@ -220,12 +144,6 @@ router.get("/newsfeed", isUser, async (req, res) => {
   } catch {
     console.log("error occured");
   }
-/*   Post.find().then((allPosts) => {
-    res.render("users/newsfeed", {
-      path: "users/newsfeed",
-      posts: allPosts,
-    });
-  }); */
 });
 
 router.get("/userprofile/:id", isUser, async (req, res) => {
@@ -241,21 +159,6 @@ router.get("/userprofile/:id", isUser, async (req, res) => {
   } catch (e) {
     console.log(e);
   }
-
-
-  /* User.findById(req.params.id, (err, foundUser) => {
-    if (err) {
-      return res.redirect("/");
-    } else {
-      Post.find({ author: req.params.id }, (err, foundPosts) => {
-        res.render("users/userprofile", {
-          path: "users/userprofile",
-          user: foundUser,
-          posts: foundPosts,
-        });
-      });
-    }
-  }); */
 });
 
 module.exports = router;
