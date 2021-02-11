@@ -119,6 +119,8 @@ io.on("connection", (socket) => {
   })
 
   socket.on("privateconn", (data) => {
+    let update = { socket: socket.id, active: true};
+    User.findByIdAndUpdate( data.senderid, update, () => {});
     Room.find()
       .all("members", [data.userid, data.senderid])
       .exec((err, room) => {
@@ -142,6 +144,11 @@ io.on("connection", (socket) => {
       });
   });
 
+  socket.on('disconnect', () => {
+    console.log("disconnected" + socket.id);
+    User.findOneAndUpdate({socket: socket.id}, { socket: "Non", active: false }, () => {});
+  })
+
   socket.on("private", (data) => {
     Room.find()
       .all("members", [data.userid, data.senderid])
@@ -161,6 +168,22 @@ io.on("connection", (socket) => {
       .in(data.roomName)
       .emit("roomsMsg", { from: data.from, msg: data.msg });
   });
+
+  socket.on("call-user", data => {
+    console.log(data.offer);
+    socket.to(data.to).emit("call-made", {
+      offer: data.offer,
+      socket: socket.id
+    })
+  });
+
+  socket.on("make-answer", data => {
+    console.log(data.answer);
+    socket.to(data.to).emit("answer-made", {
+      socket: socket.id,
+      answer: data.answer
+    })
+  })
 
   socket.on("comments", (data) => {
     const comment = {

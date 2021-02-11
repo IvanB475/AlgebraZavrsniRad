@@ -32,6 +32,17 @@ section#input_zone {
   margin-bottom: 50px;
 }
 
+#remote-video {
+  margin-left: 20%;
+}
+
+#local-video,
+#remote-video {
+  height: 20%;
+  width: 20%;
+  border: 5px inset blue;
+}
+
 div#change_color,
 div#change_username {
   width: 400px;

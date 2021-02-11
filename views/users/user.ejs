@@ -11,6 +11,11 @@
     <h1 class="chatTitle"> <%= user.username %></h1>
 
 
+    <div class="video-container">
+        <video autoplay class="remote-video" id="remote-video"></video>
+        <button id="callFriend" class="vertical-align">Call friend</button>
+        <video autoplay muted class="local-video" id="local-video"></video>
+    </div>
     <section id="chatroom">
         <section id="feedback"></section>
       </section>
@@ -19,6 +24,7 @@
       <section id="input_zone_private">
         <input id="username" type="text" value="<%= user.username %>" hidden>
         <input id="userid" type="text" value="<%= user.id %>" hidden> 
+        <input id="usersocket" type="text" value="<%= user.socket %>" hidden> 
         <input id="senderid" type="text" value="<%= currentUser.id %>" hidden>
         <input id="sender" type="text" value ="<%= currentUser.username %>" hidden>
         <input id="message" class="vertical-align" type="text" />

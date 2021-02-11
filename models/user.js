@@ -16,6 +16,8 @@ const userSchema = new Schema({
   privacy: {
     type: String
   },
+  active: Boolean,
+  socket: String,
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   status: {
