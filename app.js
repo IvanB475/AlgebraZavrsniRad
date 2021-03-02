@@ -205,6 +205,12 @@ io.on("connection", (socket) => {
     });
   });
 
+  socket.on("endingCall", (data) => {
+    socket.to(data.to).emit("callEnded", {
+      socket: socket.id
+    })
+  })
+
   socket.on("comments", (data) => {
     const comment = {
       username: data.username,

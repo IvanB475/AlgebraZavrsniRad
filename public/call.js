@@ -5,18 +5,17 @@ var socket = io.connect("http://localhost:8000", { forceNew: false });
 socket = window.opener.socket;
 var friendSocket = window.opener.usersocket;
 const iCalled = window.opener.iCalled;
-var acceptButton = document.getElementById("acceptButton");
-var endButton = document.getElementById("endButton");
+const acceptButton = document.getElementById("acceptButton");
+const endButton = document.getElementById("endButton");
+
+acceptButton.disabled = true;
+endButton.disabled = true;
 
 document.addEventListener("DOMContentLoaded", function (event) {
   setTimeout(function () {
-    console.log("worked");
-    console.log(iCalled);
     if (iCalled) {
-      console.log("SENT CALL OFFER");
       callUser(friendSocket);
     } else {
-      console.log("page loaded");
     }
   }, 3000);
 });
@@ -33,7 +32,8 @@ async function callUser(socketId) {
 }
 
 socket.on("call-made", async (data) => {
-  console.log("received call offer");
+  acceptButton.disabled = false;
+  endButton.disabled = false;
   friendSocket = data.socket;
   await peerConnection.setRemoteDescription(
     new RTCSessionDescription(data.offer)
@@ -42,6 +42,7 @@ socket.on("call-made", async (data) => {
 
 socket.on("answer-made", async (data) => {
   let isAlreadyCalling = false;
+  endButton.disabled = false;
   await peerConnection.setRemoteDescription(
     new RTCSessionDescription(data.answer)
   );
@@ -63,6 +64,16 @@ acceptButton.addEventListener("click", async () => {
   });
 });
 
+endButton.addEventListener("click", async () => {
+  window.close();
+  socket.emit("endingCall", {
+    to: friendSocket
+  })
+});
+
+socket.on("callEnded", () => {
+  window.close();
+})
 navigator.mediaDevices
   .getUserMedia({ video: true, audio: true })
   .then((stream) => {
