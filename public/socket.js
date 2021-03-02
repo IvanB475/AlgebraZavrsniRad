@@ -13,9 +13,9 @@ var callFriend = document.getElementById("callFriend");
 var acceptButton = document.getElementById("acceptButton");
 var chatroom = $("#chatroom");
 var feedback = $("#feedback");
-const peerConnection = new RTCPeerConnection();
 console.log("hi sender" + senderid + "hi user" + userid);
 var friendSocket;
+var iCalled = false;
 
 document.addEventListener("DOMContentLoaded", function (event) {
   console.log("workd");
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 callFriend.addEventListener("click", function () {
-  callUser(usersocket);
+  openCallWindow(usersocket);
 });
 $(function () {
   //Emit message
@@ -70,69 +70,36 @@ $(function () {
   });
 });
 
-async function callUser(socketId) {
+async function openCallWindow(socketId) {
   console.log("offer sent");
-  const offer = await peerConnection.createOffer();
-  await peerConnection.setLocalDescription(new RTCSessionDescription(offer));
+  iCalled = true;
+  window.open(
+    "http://localhost:8000/call/" + userid,
+    "Test window",
+    "height=7000,width=15000"
+  );
 
-  socket.emit("call-user", {
-    offer,
+  socket.emit("openCallWindow", {
     to: socketId,
+    user: userid,
+    from: socket.id,
   });
 }
 
-socket.on("call-made", async (data) => {
-  await peerConnection.setRemoteDescription(
-    new RTCSessionDescription(data.offer)
+socket.on("callWindowOpened", async (data) => {
+  console.log("window should open");
+  console.log(socket.id);
+  console.log(data.socket);
+  window.open(
+    "http://localhost:8000/call/" + data.user,
+    "Test window",
+    "height=7000,width=15000"
   );
-  friendSocket = data.socket;
-});
 
-acceptButton.addEventListener("click", async () => {
-  const answer = await peerConnection.createAnswer();
-  await peerConnection.setLocalDescription(new RTCSessionDescription(answer));
-
-  socket.emit("make-answer", {
-    answer,
-    to: friendSocket,
+  socket.emit("windowsOpened", {
+    to: data.socket,
   });
 });
-
-socket.on("answer-made", async (data) => {
-  let isAlreadyCalling = false;
-  await peerConnection.setRemoteDescription(
-    new RTCSessionDescription(data.answer)
-  );
-
-  if (!isAlreadyCalling) {
-    callUser(data.socket);
-    isAlreadyCalling = true;
-  }
-});
-
-navigator.getUserMedia(
-  { video: true, audio: true },
-  (stream) => {
-    const localVideo = document.getElementById("local-video");
-    if (localVideo) {
-      localVideo.srcObject = stream;
-    }
-
-    stream
-      .getTracks()
-      .forEach((track) => peerConnection.addTrack(track, stream));
-  },
-  (error) => {
-    console.log(error.message);
-  }
-);
-
-peerConnection.ontrack = function ({ streams: [stream] }) {
-  const remoteVideo = document.getElementById("remote-video");
-  if (remoteVideo) {
-    remoteVideo.srcObject = stream;
-  }
-};
 
 function makeid(length) {
   var result = "";

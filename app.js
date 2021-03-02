@@ -99,7 +99,7 @@ io.on("connection", (socket) => {
       message: data.message,
       imageUrl: data.imageUrl,
       username: socket.username,
-      color: socket.color
+      color: socket.color,
     });
   });
 
@@ -116,11 +116,11 @@ io.on("connection", (socket) => {
 
   socket.on("change_color", (data) => {
     socket.color = data.color;
-  })
+  });
 
   socket.on("privateconn", (data) => {
-    let update = { socket: socket.id, active: true};
-    User.findByIdAndUpdate( data.senderid, update, () => {});
+    let update = { socket: socket.id, active: true };
+    User.findByIdAndUpdate(data.senderid, update, () => {});
     Room.find()
       .all("members", [data.userid, data.senderid])
       .exec((err, room) => {
@@ -144,10 +144,14 @@ io.on("connection", (socket) => {
       });
   });
 
-  socket.on('disconnect', () => {
+  socket.on("disconnect", () => {
     console.log("disconnected" + socket.id);
-    User.findOneAndUpdate({socket: socket.id}, { socket: "Non", active: false }, () => {});
-  })
+    User.findOneAndUpdate(
+      { socket: socket.id },
+      { socket: "Non", active: false },
+      () => {}
+    );
+  });
 
   socket.on("private", (data) => {
     Room.find()
@@ -169,21 +173,37 @@ io.on("connection", (socket) => {
       .emit("roomsMsg", { from: data.from, msg: data.msg });
   });
 
-  socket.on("call-user", data => {
-    console.log(data.offer);
+  socket.on("call-user", (data) => {
+    console.log("I SENT CALL OFFER TO " + data.to);
     socket.to(data.to).emit("call-made", {
       offer: data.offer,
-      socket: socket.id
-    })
+      socket: socket.id,
+    });
   });
 
-  socket.on("make-answer", data => {
-    console.log(data.answer);
+  socket.on("openCallWindow", (data) => {
+    socket.to(data.to).emit("callWindowOpened", {
+      socket: socket.id,
+      user: data.user,
+      from: data.from,
+    });
+  });
+
+  socket.on("windowsOpened", (data) => {
+    console.log(data.to);
+    console.log("________");
+    console.log(socket.id);
+    socket.to(data.to).emit("readyForCall", {
+      socket: socket.id,
+    });
+  });
+
+  socket.on("make-answer", (data) => {
     socket.to(data.to).emit("answer-made", {
       socket: socket.id,
-      answer: data.answer
-    })
-  })
+      answer: data.answer,
+    });
+  });
 
   socket.on("comments", (data) => {
     const comment = {

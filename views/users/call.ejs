@@ -1,0 +1,13 @@
+<head>
+  <link rel="stylesheet" type="text/css" href="/css/chats/chats.css" />
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div class="video-container">
+    <video autoplay class="remote-video" id="remote-video"></video>
+    <button id="endButton" class="vertical-align">End call</button>
+    <button id="acceptButton" class="vertical-align">Accept call</button>
+    <video autoplay muted class="local-video" id="local-video"></video>
+  </div>
+  <script src="/call.js"></script>
+</body>

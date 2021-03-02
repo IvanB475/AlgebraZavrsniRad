@@ -13,18 +13,20 @@ router.get("/login", (req, res) => {
   res.render("users/login", { path: "users/login" });
 });
 
-router.get("/settings", isUser, async (req, res) => {
+router.get("/call/:id", (req, res) => {
+  res.render("users/call", { path: "users/call" });
+});
 
+router.get("/settings", isUser, async (req, res) => {
   try {
     const posts = await Post.find({ author: req.user._id });
     res.render("users/settings", {
       posts: posts,
       path: "users/settings",
     });
-  } catch(e) {
+  } catch (e) {
     console.log("error occured");
   }
-
 });
 
 router.get("/resetpw", (req, res) => {
@@ -32,22 +34,19 @@ router.get("/resetpw", (req, res) => {
 });
 
 router.get("/resetpw/:token", async (req, res) => {
-
-    try {
-      const user = await User.findOne(
-        {
-          resetPasswordToken: req.params.token,
-          resetPasswordExpires: { $gt: Date.now() },
-        });
-      if(!user) {
-        console.log("token is invalid");
-      } else {
-        res.render("users/setnewpw", { token: req.params.token });
-      }
-    } catch(e) {
-      console.log("something went wrong");
+  try {
+    const user = await User.findOne({
+      resetPasswordToken: req.params.token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+    if (!user) {
+      console.log("token is invalid");
+    } else {
+      res.render("users/setnewpw", { token: req.params.token });
     }
-
+  } catch (e) {
+    console.log("something went wrong");
+  }
 });
 
 router.get("/findusers", isUser, async (req, res) => {
@@ -55,86 +54,88 @@ router.get("/findusers", isUser, async (req, res) => {
   let foundUsers = [];
   let friends = [];
 
-  try { 
-    const users = await User.find({username: regex});
-    users.forEach( user => { 
-      if( user.friends.some(friend => friend.userId.toString() === req.user._id.toString() && (friend.status === "declined" || friend.status ==="blocked" || friend.status ==="friends"))){
-          console.log("do not display this user");
+  try {
+    const users = await User.find({ username: regex });
+    users.forEach((user) => {
+      if (
+        user.friends.some(
+          (friend) =>
+            friend.userId.toString() === req.user._id.toString() &&
+            (friend.status === "declined" ||
+              friend.status === "blocked" ||
+              friend.status === "friends")
+        )
+      ) {
+        console.log("do not display this user");
       } else {
-        if( user.privacy !== "Private"){ 
+        if (user.privacy !== "Private") {
           foundUsers.push(user);
         }
       }
     });
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 
-  try { 
+  try {
     const user = await User.findById(req.user._id);
     for (friend of user.friends) {
       if (friend.status === "friends") {
         friends.push(friend.userId);
       }
     }
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 
-
-  try { 
+  try {
     const allFriends = await User.find({ _id: { $in: friends } });
     res.render("users/myfriendlist", {
       users: foundUsers,
       path: "users/myfriendlist",
       friends: allFriends,
     });
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
-
 });
 
-
 router.get("/user/:id", async (req, res) => {
-
   try {
     const user = await User.findById(req.params.id);
     res.render("users/user", { path: "users/user", user: user });
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
-
 });
 
 router.get("/myfriends", isUser, async (req, res) => {
   var friends = [];
 
-  try { 
+  try {
     const user = await User.findById(req.user._id);
     for (friend of user.friends) {
       if (friend.status === "friends") {
         friends.push(friend.userId);
-      };
+      }
     }
-  } catch(e){
+  } catch (e) {
     console.log(e);
   }
 
-  try { 
-    const allFriends = await User.find({ _id: { $in: friends }});
+  try {
+    const allFriends = await User.find({ _id: { $in: friends } });
     res.render("users/myfriendlist", {
       users: 17555,
       path: "users/myfriendlist",
       friends: allFriends,
     });
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
 
 router.get("/newsfeed", isUser, async (req, res) => {
-  
   try {
     const posts = await Post.find();
     res.render("users/newsfeed", {
@@ -147,10 +148,9 @@ router.get("/newsfeed", isUser, async (req, res) => {
 });
 
 router.get("/userprofile/:id", isUser, async (req, res) => {
-
-  try { 
+  try {
     const user = await User.findById(req.params.id);
-    const posts = await Post.find({author: req.params.id});
+    const posts = await Post.find({ author: req.params.id });
     res.render("users/userprofile", {
       path: "users/userprofile",
       user: user,
