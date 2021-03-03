@@ -5,15 +5,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <link href="/css/chats/scaledronechat.css" rel="stylesheet" type="text/css">
+  <script src="/socket.io/socket.io.js"></script>
   <%- include('../partials/header')%>
 </head>
 <body>
     <%- include('../partials/navbar')%>
+    <% if (currentUser) { %>
+      <input type="hidden" id="userid" value="<%= currentUser._id %>">
+      <% } %>
   <div class="messages"></div>
   <form class="message-form" onsubmit="return false;">
     <input class="message-form__input" placeholder="Type a message.." type="text"/>
     <input class="message-form__button" value="Send" type="submit"/>
   </form>
   <script src="scaledroneChat.js"></script>
+  <script src="/includeSocket.js"></script>
 </body>
 </html>

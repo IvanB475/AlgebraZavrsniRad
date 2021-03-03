@@ -1,6 +1,7 @@
 <%- include('../partials/header.ejs') %>
 <link rel="stylesheet" type="text/css" href="/css/users/myfriendlist.css">
 <script src="https://kit.fontawesome.com/42dba9c49b.js" crossorigin="anonymous"></script>
+<script src="/socket.io/socket.io.js"></script>
 </head>
 
 <body>
@@ -28,6 +29,7 @@
 
     <h2>Find friends</h2>
     <form action="/findusers" method="GET">
+        <input type="hidden" id="userid" value="<%= currentUser._id %>">
         <label for="search">Find users</label>
         <input type="text" name="search" id="search">
         <input type="submit" value="Search">
@@ -49,4 +51,5 @@
         <h3>No user with that username found</h3>
         <% } %> 
     <%  } %>
+    <script src="/includeSocket.js"></script>
 </body>

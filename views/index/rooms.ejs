@@ -1,12 +1,15 @@
 
     <%- include('../partials/header.ejs') %>
-    
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
         <%- include('../partials/navbar.ejs') %>
 <h1>Sign up</h1>
 
 <form action="/room-register" method="POST">
+    <% if (currentUser) { %>
+        <input type="hidden" id="userid" value="<%= currentUser._id %>">
+        <% } %>
     <select name="room" id="room">
         <option value="Algebra">Algebra</option>
         <option value="Backend">Backend</option>
@@ -16,5 +19,5 @@
     <input type="text" name="kod" placeholder="Unesite kod">
     <button>Submit</button>
 </form>
-
+<script src="/includeSocket.js"></script>
 </html>
