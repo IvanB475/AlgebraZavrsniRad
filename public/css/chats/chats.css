@@ -58,6 +58,10 @@ section#input_zone {
   width: 100%;
 }
 
+.hide-me {
+  visibility: hidden;
+}
+
 div#change_color,
 div#change_username {
   width: 400px;

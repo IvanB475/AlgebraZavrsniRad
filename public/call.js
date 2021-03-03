@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 async function callUser(socketId) {
   console.log("offer sent");
+  acceptButton.setAttribute("class", "hide-me");
   const offer = await peerConnection.createOffer();
   await peerConnection.setLocalDescription(new RTCSessionDescription(offer));
 
@@ -54,7 +55,8 @@ socket.on("answer-made", async (data) => {
 });
 
 acceptButton.addEventListener("click", async () => {
-  acceptButton.disabled = true;
+  console.log("clicked button");
+  acceptButton.setAttribute("class", "hide-me");
   const answer = await peerConnection.createAnswer();
   await peerConnection.setLocalDescription(new RTCSessionDescription(answer));
 
