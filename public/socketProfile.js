@@ -5,10 +5,21 @@ var socket = io.connect("http://localhost:8000");
 var postlist = $("#postlist");
 var send_message = $("#send_message");
 var username = $("#username");
+var userid = document.getElementById("userid").value;
 var comment = $("#comment");
 var postid = $("#postid");
 var commentlist = $(".commentlist");
 var sendcomment = $("#sendcomment");
+
+
+
+document.addEventListener("DOMContentLoaded", function (event) {
+  console.log("socket updated");
+  console.log(userid);
+  socket.emit("newConn", {
+    userid: userid,
+  });
+});
 
 $(function () {
   $(".selector").on("keyup click", function () {
@@ -67,6 +78,22 @@ $(function () {
         "</em>" +
         `<input type='text' class="form-control-plaintext" value= "${data.comment.message}" + readonly></br>`
     );
+  });
+});
+
+
+socket.on("callWindowOpened", async (data) => {
+  console.log("window should open");
+  console.log(socket.id);
+  console.log(data.socket);
+  window.open(
+    "http://localhost:8000/call/" + data.user,
+    "Test window",
+    "height=7000,width=15000"
+  );
+
+  socket.emit("windowsOpened", {
+    to: data.socket,
   });
 });
 

@@ -9,6 +9,7 @@
     <h5>Add a new post</h5>
     <form action="/newsfeed" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="hidden" name="userid" id="userid" value="<%= currentUser._id %>">
         <textarea rows="5" cols="50" name="newpost" id="newpost"></textarea>
         <button id="send_message">Post!</button> 
     </form>

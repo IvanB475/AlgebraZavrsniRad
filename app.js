@@ -118,6 +118,13 @@ io.on("connection", (socket) => {
     socket.color = data.color;
   });
 
+  socket.on("newConn", (data) => {
+    let update = { socket: socket.id, active: true };
+    User.findByIdAndUpdate(data.userid, update, () => {
+      console.log("updated socket status");
+    });
+  });
+
   socket.on("privateconn", (data) => {
     let update = { socket: socket.id, active: true };
     User.findByIdAndUpdate(data.senderid, update, () => {});
@@ -145,7 +152,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("disconnected" + socket.id);
     User.findOneAndUpdate(
       { socket: socket.id },
       { socket: "Non", active: false },

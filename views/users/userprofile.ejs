@@ -19,6 +19,7 @@
     <p>Contact mail: <%= user.email %></p>
     <form action="/handleFriend" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="hidden" id="userid" value="<%= currentUser._id %>">
         <input type="text" hidden value="<%= user._id %>" name="handleFriendId">
         <button name="handleFriend" class="button" value="Unfriend">Unfriend friend</button>
         <button name="handleFriend" class="button" value="Block">Block friend</button>
