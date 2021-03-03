@@ -1,5 +1,6 @@
 <%- include('../partials/header.ejs') %>
 <link rel="stylesheet" type="text/css" href="/css/users/myfriendlist.css">
+<script src="https://kit.fontawesome.com/42dba9c49b.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -14,7 +15,12 @@
                 <img src="<%= friends[i].imageUrl %>" class="profile_img" width="50px" height="50px"></img>
            <% } else { %>
                 <img src="https://ptetutorials.com/images/user-profile.png" class="profile_img" width= "50px" height="50px"></img>
-          <%  } %>   
+          <%  } %> 
+          <% if (friends[i].active) { %>
+          <i class="fas fa-circle" style="color: green"></i>
+          <% } else {  %>
+            <i class="fas fa-circle" style="color: gray"></i>
+            <% } %>
             <a href="/userprofile/<%= friends[i].id %>"><%= friends[i].username %> </a>
             </div>
     <% } } %>
