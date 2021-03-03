@@ -46,10 +46,9 @@ section#input_zone {
 }
 
 #local-video {
-  margin-top: 10%;
-  height: 35%;
-  width: 35%;
-  right: 10.5%;
+  height: 25%;
+  width: 20%;
+  right: 14.5%;
   position: absolute;
   bottom: 0;
 }

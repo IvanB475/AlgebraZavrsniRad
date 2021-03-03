@@ -54,7 +54,7 @@ socket.on("answer-made", async (data) => {
 });
 
 acceptButton.addEventListener("click", async () => {
-  console.log("clicked button");
+  acceptButton.disabled = true;
   const answer = await peerConnection.createAnswer();
   await peerConnection.setLocalDescription(new RTCSessionDescription(answer));
 
@@ -67,13 +67,13 @@ acceptButton.addEventListener("click", async () => {
 endButton.addEventListener("click", async () => {
   window.close();
   socket.emit("endingCall", {
-    to: friendSocket
-  })
+    to: friendSocket,
+  });
 });
 
 socket.on("callEnded", () => {
   window.close();
-})
+});
 navigator.mediaDevices
   .getUserMedia({ video: true, audio: true })
   .then((stream) => {
