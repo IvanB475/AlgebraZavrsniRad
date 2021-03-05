@@ -50,9 +50,10 @@ router.get("/resetpw/:token", async (req, res) => {
 });
 
 router.get("/findusers", isUser, async (req, res) => {
-  const regex = new RegExp(req.query.search, "gi");
   let foundUsers = [];
   let friends = [];
+  if(req.query.search.length > 0) {
+  const regex = new RegExp(req.query.search, "gi");
 
   try {
     const users = await User.find({ username: regex });
@@ -76,7 +77,10 @@ router.get("/findusers", isUser, async (req, res) => {
   } catch (e) {
     console.log(e);
   }
-
+} 
+    if(foundUsers.length < 1) {
+      foundUsers = 17555;
+    }
   try {
     const user = await User.findById(req.user._id);
     for (friend of user.friends) {

@@ -12,6 +12,19 @@ const Room = require("./models/room");
 const Post = require("./models/post");
 const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
+require('dotenv').config();
+
+const MONGO_URL = process.env.MONGO_CONN;
+mongoose.connect(MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+var db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function () {
+  console.log("success");
+});
 
 app.use(
   session({
@@ -78,18 +91,8 @@ app.use(usersRoutes);
 app.use(indexRoutes);
 app.use(usersControllers);
 
-mongoose.connect("mongodb://localhost:27017/zavrsnirad", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
 
-var db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function () {
-  console.log("success");
-});
-
-const server = app.listen(8000, console.log("server started"));
+const server = app.listen(8080, console.log("server started"));
 const io = require("./socket").init(server);
 io.on("connection", (socket) => {
   socket.username = "Anonymous";
