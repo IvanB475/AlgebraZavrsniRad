@@ -1,7 +1,7 @@
 
 
 //make connection
-var socket = io.connect('http://18.192.121.29:8080')
+var socket = io.connect('http://localhost:8080')
 
 //buttons and inputs
 var message = $("#message")

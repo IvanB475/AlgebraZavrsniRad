@@ -12,6 +12,7 @@ const Room = require("./models/room");
 const Post = require("./models/post");
 const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
+const joiSchema = require('./middleware/joiSchemas');
 require('dotenv').config();
 
 const MONGO_URL = process.env.MONGO_CONN;
@@ -114,7 +115,21 @@ io.on("connection", (socket) => {
   });
 
   socket.on("change_username", (data) => {
-    socket.username = data.username;
+    console.log(data);
+
+          const { error } = joiSchema.changeUsername.validate(data);
+          const valid = error == null;
+  
+          if(valid) {
+            console.log("success");
+              socket.username = data.username;
+          } else {
+              const { details } = error;
+              const message = details.map(i => i.message).join(',');
+  
+              console.log("that can't be done");
+              socket.username = "wrong input";
+          }
   });
 
   socket.on("change_color", (data) => {

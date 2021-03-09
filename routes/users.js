@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const Post = require("../models/post");
+const joiSchema = require('../middleware/joiSchemas');
+const { queryValidator } = require('../middleware/joiValidator');
 
 require("../middleware/index")();
 
@@ -49,7 +51,7 @@ router.get("/resetpw/:token", async (req, res) => {
   }
 });
 
-router.get("/findusers", isUser, async (req, res) => {
+router.get("/findusers", isUser, queryValidator(joiSchema.findFriends), async (req, res) => {
   let foundUsers = [];
   let friends = [];
   if(req.query.search.length > 0) {

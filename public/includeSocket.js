@@ -1,6 +1,6 @@
-var socket = io.connect("http://18.192.121.29:8080");
+var socket = io.connect("http://localhost:8080");
 
-var userid = document.getElementById("userid").value;
+var userid = document.getElementById("userid")?.value;
 
 
 document.addEventListener("DOMContentLoaded", function (event) {

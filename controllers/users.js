@@ -7,10 +7,13 @@ const nodemailer = require("nodemailer");
 const async = require("async");
 const Post = require("../models/post");
 const io = require("../socket");
+const joiSchema = require('../middleware/joiSchemas');
+const { validator, queryValidator } = require('../middleware/joiValidator');
+
 
 require("../middleware/index")();
 
-router.post("/signup", async (req, res) => {
+router.post("/signup", validator(joiSchema.signup), async (req, res) => {
   const newUser = new User({
     username: req.body.username,
     email: req.body.email,
@@ -29,7 +32,7 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post(
-  "/login",
+  "/login", validator(joiSchema.login),
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
@@ -42,7 +45,7 @@ router.post("/logout", (req, res) => {
   console.log("successfully logged you out");
 });
 
-router.post("/settings", isUser, async (req, res, next) => {
+router.post("/settings", isUser, validator(joiSchema.settings), async (req, res, next) => {
   let update;
   if ( req.file && !req.body.userPrivacy) { 
   update = { email: req.body.email, imageUrl: req.file.path };
@@ -62,7 +65,7 @@ router.post("/settings", isUser, async (req, res, next) => {
   }
 });
 
-router.post("/resetpw", (req, res, next) => {
+router.post("/resetpw", validator(joiSchema.forgotPW), (req, res, next) => {
   async.waterfall(
     [
       function (done) {

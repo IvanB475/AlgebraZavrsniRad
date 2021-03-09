@@ -1,5 +1,5 @@
 //make connection
-var socket = io.connect("http://18.192.121.29:8080");
+var socket = io.connect("http://localhost:8080");
 
 //buttons and inputs
 var message = $("#message");
@@ -11,7 +11,7 @@ var feedback = $("#feedback");
 var imageUrl = $("#imageUrl");
 var color = $("#color");
 var send_color = $("#send_color");
-var userid = document.getElementById("userid").value;
+var userid = document.getElementById("userid")?.value;
 
 
 document.addEventListener("DOMContentLoaded", function (event) {

@@ -4,7 +4,7 @@ var senderid = document.getElementById("senderid").value;
 var usersocket = document.getElementById("usersocket").value;
 var userid = document.getElementById("userid").value;
 //make connection
-var socket = io.connect("http://18.192.121.29:8080", { query: `user=${username}` });
+var socket = io.connect("http://localhost:8080", { query: `user=${username}` });
 
 //buttons and inputs
 var message = $("#message");
