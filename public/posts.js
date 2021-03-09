@@ -1,5 +1,5 @@
 //make connection
-var socket = io.connect("http://localhost:8000");
+var socket = io.connect("http://18.192.121.29:8080");
 
 //buttons and inputs
 var postlist = $("#postlist");

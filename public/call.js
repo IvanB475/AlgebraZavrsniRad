@@ -1,7 +1,7 @@
 const peerConnection = new RTCPeerConnection();
 const localVideo = document.getElementById("local-video");
 const remoteVideo = document.getElementById("remote-video");
-var socket = io.connect("http://localhost:8000", { forceNew: false });
+var socket = io.connect("http://18.192.121.29:8080", { forceNew: false });
 socket = window.opener.socket;
 var friendSocket = window.opener.usersocket;
 const iCalled = window.opener.iCalled;
@@ -76,8 +76,7 @@ endButton.addEventListener("click", async () => {
 socket.on("callEnded", () => {
   window.close();
 });
-navigator.mediaDevices
-  .getUserMedia({ video: true, audio: true })
+navigator.mediaDevices.getUserMedia({ video: true, audio: true })
   .then((stream) => {
     if (localVideo) {
       localVideo.srcObject = stream;

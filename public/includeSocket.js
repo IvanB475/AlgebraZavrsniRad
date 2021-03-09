@@ -1,4 +1,4 @@
-var socket = io.connect("http://localhost:8000");
+var socket = io.connect("http://18.192.121.29:8080");
 
 var userid = document.getElementById("userid").value;
 
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     console.log(socket.id);
     console.log(data.socket);
     window.open(
-      "http://localhost:8000/call/" + data.user,
+      "http://18.192.121.29:8080/call/" + data.user,
       "Test window",
       "height=7000,width=15000"
     );

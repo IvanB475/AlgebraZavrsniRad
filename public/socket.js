@@ -4,7 +4,7 @@ var senderid = document.getElementById("senderid").value;
 var usersocket = document.getElementById("usersocket").value;
 var userid = document.getElementById("userid").value;
 //make connection
-var socket = io.connect("http://localhost:8000", { query: `user=${username}` });
+var socket = io.connect("http://18.192.121.29:8080", { query: `user=${username}` });
 
 //buttons and inputs
 var message = $("#message");
@@ -74,7 +74,7 @@ async function openCallWindow(socketId) {
   console.log("offer sent");
   iCalled = true;
   window.open(
-    "http://localhost:8000/call/" + userid,
+    "http://18.192.121.29:8080/call/" + userid,
     "Test window",
     "height=7000,width=15000"
   );
@@ -91,7 +91,7 @@ socket.on("callWindowOpened", async (data) => {
   console.log(socket.id);
   console.log(data.socket);
   window.open(
-    "http://localhost:8000/call/" + data.user,
+    "http://18.192.121.29:8080/call/" + data.user,
     "Test window",
     "height=7000,width=15000"
   );

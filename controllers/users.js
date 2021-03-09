@@ -205,7 +205,7 @@ router.post("/sendFriendReq", isUser, async (req, res) => {
 
 
 
-router.post("/handleFriend", (req, res) => {
+router.post("/handleFriend", (req, res, next) => {
   const friendId = req.body.handleFriendId;
   
 
@@ -225,7 +225,7 @@ router.post("/handleFriend", (req, res) => {
     }
   })
     .then(() => {
-      res.render("index/landing", { users: 0, path: "/" });
+      res.redirect("back");
     })
     .catch(() => {
       console.log("Failed");

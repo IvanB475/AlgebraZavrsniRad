@@ -124,7 +124,6 @@ io.on("connection", (socket) => {
   socket.on("newConn", (data) => {
     let update = { socket: socket.id, active: true };
     User.findByIdAndUpdate(data.userid, update, () => {
-      console.log("updated socket status");
     });
   });
 
@@ -175,7 +174,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("roomsMsg", (data) => {
-    console.log(data.roomName);
     socket.join(data.roomName);
     io.sockets
       .in(data.roomName)
@@ -183,7 +181,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("call-user", (data) => {
-    console.log("I SENT CALL OFFER TO " + data.to);
     socket.to(data.to).emit("call-made", {
       offer: data.offer,
       socket: socket.id,
@@ -199,9 +196,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("windowsOpened", (data) => {
-    console.log(data.to);
-    console.log("________");
-    console.log(socket.id);
     socket.to(data.to).emit("readyForCall", {
       socket: socket.id,
     });
