@@ -23,7 +23,7 @@ h1 {
 div#change_username,
 div#change_color,
 section#input_zone {
-  border: 5px outset #8258fa;
+  border: 5px outset #00695c;
 }
 
 .button-container {
@@ -67,19 +67,21 @@ div#change_username {
   width: 400px;
   height: 3%;
   display: inline-block;
-  background-color: #bca9f5;
+  background-color: #00695c;
 }
 
 #color {
   width: 230px;
 }
 
+
+
 #username {
   width: 230px;
 }
 
 section#chatroom {
-  border: 5px inset #8258fa;
+  border: 1px inset #00695c;
   height: 65%;
   overflow: auto;
 }
@@ -87,15 +89,15 @@ section#chatroom {
 section#input_zone {
   height: 7%;
   text-align: center;
-  background-color: #bca9f5;
+  background-color: #00695c;
 }
 
 section#input_zone_private {
   width: 85%;
   height: 7%;
   text-align: center;
-  background-color: #bca9f5;
-  border: 5px outset #8258fa;
+  background-color: #00695c;
+  border: 5px outset #00695c;
 }
 
 .vertical-align {
@@ -112,16 +114,16 @@ input#username {
 
 input#message {
   display: inline-block;
-  width: 73%;
-  height: 70%;
+  width: 80%;
+  height: 90%;
   font-family: "Comfortaa", sans-serif;
   font-size: 2vh;
 }
 
 button#send_message {
   display: inline-block;
-  height: 70%;
-  width: 10%;
+  height: 90%;
+  width: 15%;
 }
 
 p.message {

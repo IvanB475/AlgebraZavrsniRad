@@ -25,6 +25,4 @@ roomsArray.forEach(i => {
     res.render("index/room", { path: "index/room", name: i });
   })
 })
-
-
 module.exports = router;

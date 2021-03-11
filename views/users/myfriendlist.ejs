@@ -9,50 +9,69 @@
     <%- include('../partials/friends') %>
     <h1>My friends</h1>
     <ul>
+        <div class="find_friends_box">
+            <div class="find_friends_mini_box">
+        <form action="/findusers" method="GET">
+            <input type="hidden" id="userid" value="<%= currentUser._id %>">
+            <div class="search-bar">
+            <input type="text" name="search" id="search" placeholder="find new friends">
+            <button value="Search">Find now!</button>
+            </div>
+           </form>
+           <%if (users !== 17555) { %> 
+           <% if ( users.length > 0 ) { %> 
+           <h3 class="find_users_class">Found users</h3>
+        </div>
+            <div class="grid_found_friends">
+           <% for ( let user of users ) { %> 
+           <% if (currentUser._id != user.id) { %>
+            <div class="friendBox">
+                <div class="friend_name">
+           <a href="/user/<%= user._id %>"><%= user.username %></a>
+        </div>
+            <br>
+        <%  if( user.imageUrl !== undefined ) {  %>
+            <a href="/userprofile/<%= user.id %>"><img src="<%= user.imageUrl %>" class="" width="50%" height="70%"></img></a>
+        <% } else { %>
+            <a href="/userprofile/<%= user.id %>"><img src="https://ptetutorials.com/images/user-profile.png" class="profile_img" width= "40%" height="70%"></img></a>
+        <%  } %>
+        <br>
+           <form action="/sendFriendReq" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" name="wantedUserId" value="<%= user.id %>">
+            <button type="submit" class="add_friend_button">Add friend</button>
+           </form>
+           </div>
+                <% } %>
+            <% } %>
+            </div>
+           <% } else { %>
+            <h3 class="find_users_class">No user with that username found</h3>
+            <% } %> 
+        <%  } %>
+        </div>
         <% if (friends.length > 0) { %> 
+            <div class="grid_friends">
         <% for ( var i = 0; i < friends.length; i++) { %>
          <div class="friendBox">
+             <div class="friend_name">
+            <% if (friends[i].active) { %>
+                <i class="fas fa-circle" style="color: green"></i>  
+                <% } else {  %>
+                  <i class="fas fa-circle" style="color: gray"></i>
+                  <% } %>
+                  <a href="/userprofile/<%= friends[i].id %>"><%= friends[i].username %> </a>
+            </div>
+                  <br>
             <%  if( friends[i].imageUrl !== undefined ) {  %>
-                <img src="<%= friends[i].imageUrl %>" class="profile_img" width="50px" height="50px"></img>
+                <a href="/userprofile/<%= friends[i].id %>"><img src="<%= friends[i].imageUrl %>" class="" width="50%" height="70%"></img></a>
            <% } else { %>
-                <img src="https://ptetutorials.com/images/user-profile.png" class="profile_img" width= "50px" height="50px"></img>
+            <a href="/userprofile/<%= friends[i].id %>"><img src="https://ptetutorials.com/images/user-profile.png" class="profile_img" width= "40%" height="70%"></img></a>
           <%  } %> 
-          <% if (friends[i].active) { %>
-          <i class="fas fa-circle" style="color: green"></i>
-          <% } else {  %>
-            <i class="fas fa-circle" style="color: gray"></i>
-            <% } %>
-            <a href="/userprofile/<%= friends[i].id %>"><%= friends[i].username %> </a>
             </div>
     <% } } %>
+    </div>
 </ul>
 
-    <h2>Find friends</h2>
-    <form action="/findusers" method="GET">
-        <input type="hidden" id="userid" value="<%= currentUser._id %>">
-        <label for="search">Find users</label>
-        <input type="text" name="search" id="search">
-        <input type="submit" value="Search">
-       </form>
-       <%if (users !== 17555) { %> 
-       <% console.log(users); %>
-       <% if ( users.length > 0 ) { %> 
-       <h3>Found users</h3>
-       <ul>
-       <% for ( let user of users ) { %> 
-       <% if (currentUser._id != user.id) { %>
-       <li><a href="/user/<%= user._id %>"><%= user.username %></a></li>
-       <form action="/sendFriendReq" method="POST">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <input type="hidden" name="wantedUserId" value="<%= user.id %>">
-        <button type="submit">Add friend</button>
-       </form>
-            <% } %>
-        <% } %>
-       </ul>
-       <% } else { %>
-        <h3>No user with that username found</h3>
-        <% } %> 
-    <%  } %>
     <script src="/includeSocket.js"></script>
 </body>
