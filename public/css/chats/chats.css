@@ -31,9 +31,7 @@ section#input_zone {
 }
 
 .chatTitle {
-  margin-top: 30px;
-  margin-left: 40%;
-  margin-bottom: 50px;
+  margin-right: 15%;
 }
 
 .button-box {
@@ -101,11 +99,8 @@ section#input_zone_private {
 }
 
 .vertical-align {
-  position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+    text-align: center;
+    margin-bottom: 2%;
 }
 
 input#username {

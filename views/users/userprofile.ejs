@@ -2,6 +2,8 @@
 <meta http-equiv="Content-Type" const="text/html;charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="/css/users/userprofile.css" >
     <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/users/newsfeed.css" type="text/css">
+    <script src="https://kit.fontawesome.com/42dba9c49b.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script src="/calculateTime.js"></script>
 </head>
@@ -21,43 +23,56 @@
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <input type="hidden" id="userid" value="<%= currentUser._id %>">
         <input type="text" hidden value="<%= user._id %>" name="handleFriendId">
-        <button name="handleFriend" class="button" value="Unfriend">Unfriend friend</button>
-        <button name="handleFriend" class="button" value="Block">Block friend</button>
+        <button name="handleFriend" class="button" value="Unfriend">Unfriend user</button>
+        <button name="handleFriend" class="button" style="background-color: red; border: 1px solid red" value="Block"><i class="fas fa-lock"></i>Block friend</button>
     </form>
     </div>
     <div class ="page">
     <section id="postlist">
     </section>
-  <% if (posts.length > 0) { %>
-      <% for (var i = (posts.length - 1); i >= 0; i--) { %>
-          <h5><%= posts[i].username %></h5>
-          <em class="timeSince"><%= (Date.now() - posts[i].time) %></em>
-      <textarea rows="5" cols="50" readonly><%= posts[i].post %></textarea>
-      </br>
-      <div class="selector"> 
-      <div class="commentlist" id="commentlist<%= posts[i].id %>">
-      <% if ( posts[i].comments.length > 0 &&  posts[i].comments.length < 6) { %> 
-      <% for ( var y = 0; y <= (posts[i].comments.length-1); y++) { %>
-        <em><%= posts[i].comments[y].username %></em> <input type="text" class="form-control-plaintext"  value="<%= posts[i].comments[y].message %>" readonly>
-        <em class="timeSince"><%= (Date.now() - posts[i].comments[y].time) %></em>
+    <% if (posts.length > 0) { %>
+        <% for (var i = (posts.length - 1); i >= 0; i--) { %>
+            <br>
+            <div class="post" readonly>
+                <h5><img src="https://ptetutorials.com/images/user-profile.png" class="profile_img" width= "25px" height="25px"></img><%= posts[i].username %></h5>
+            <em class="timeSince posted_on"><%= (Date.now() - posts[i].time) %></em>
+            <hr>
+        <%= posts[i].post %>
+    </div>
+        <div class="selector"> 
+        <div class="commentlist" id="commentlist<%= posts[i].id %>">
+        <% if ( posts[i].comments.length > 0 &&  posts[i].comments.length < 6) { %> 
+        <% for ( var y = 0; y <= (posts[i].comments.length-1); y++) { %>
+            <div class="comment">
+                <em><img src="https://ptetutorials.com/images/user-profile.png" class="profile_img" width= "20px" height="20px"></img><%= posts[i].comments[y].username %></em>
+                 <span class="form-control-plaintext" readonly> <%= posts[i].comments[y].message %> </span>
+              </div>
+                 <em class="timeSince posted_on"><%= (Date.now() - posts[i].comments[y].time) %></em>
+              </br>
+              </br>
+          <% } %>
+          <% } else if(posts[i].comments.length >= 6) { %>
+            <% for ( var y = (posts[i].comments.length -1); y >= (posts[i].comments.length -6); y--) { %>
+                <br>
+            <div class="comment">
+            <em><img src="https://ptetutorials.com/images/user-profile.png" class="profile_img" width= "20px" height="20px"></img><%= posts[i].comments[y].username %></em>
+            <span class="form-control-plaintext" readonly> <%= posts[i].comments[y].message %> </span>
+        </div>
+            <em class="timeSince posted_on"><%= (Date.now() - posts[i].comments[y].time) %></em>
+                <% } } else { } %>
+        </br>
+        <selection>
+            <input type="hidden" id="username" value="<%=currentUser.username %>">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" id="postid" value="<%= posts[i].id %>">
+            <input type="text" id="comment">
+            <button id="sendcomment" type="submit" onclick="mySubmit()">Comment!</button> 
+            <br>
+        </selection>
+    </div>
+</div>
         <% } %>
-        <% } else if(posts[i].comments.length >= 6) { %>
-          <% for ( var y = (posts[i].comments.length -1); y >= (posts[i].comments.length -6); y--) { %>
-              <em><%= posts[i].comments[y].username %></em> <input type="text"  value="<%= posts[i].comments[y].message %>" readonly> 
-              <em class="timeSince"><%= (Date.now() - posts[i].comments[y].time) %></em>
-              <% } } else { } %>
-      </div>
-      </br>
-      <selection>
-          <input type="hidden" id="username" value="<%=currentUser.username %>">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <input type="hidden" id="postid" value="<%= posts[i].id %>">
-          <input type="text" id="comment">
-          <button id="sendcomment" type="submit" onclick="mySubmit()">Comment!</button> 
-      </selection>
-  </div>
-      <% } %>
-  <% } %>
+    <% } %>
 </div>
 </div>
 

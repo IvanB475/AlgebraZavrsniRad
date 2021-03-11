@@ -1,4 +1,42 @@
 .pageselector {
-    max-width: 300px;
+    max-width: 400px;
     margin: auto;
 }
+
+.post {
+    -moz-appearance: textfield-multiline;
+    -webkit-appearance: textarea;
+    border: 1px solid blue;
+    box-shadow: 15px 15px 18px rgba(13, 16, 231, 0.26);
+    font: medium -moz-fixed;
+    font: -webkit-small-control;
+    height: 150px;
+    width: 400px;
+    overflow: auto;
+    padding: 2px;
+    margin-top: 10px;
+}
+
+hr {
+    border: 1px solid rgb(124, 149, 153);
+}
+
+.posted_on {
+    font-size: 11px;
+}
+
+.commentlist {
+    background-color: grey;
+    color: white;
+    padding: 10px;
+}
+
+.comment {
+    border-radius: 25px;
+    background-color: white;
+    color: black;
+    width: fit-content;
+    padding: 5px;
+    padding-right: 10px;
+}
+
