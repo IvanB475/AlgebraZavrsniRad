@@ -17,4 +17,14 @@ router.get("/room-register", isUser, (req, res) => {
 router.get("/scaledronechat", (req, res) => {
   res.render("index/scaledronechat", { path: "index/scaledronechat" });
 });
+
+const roomsArray = ["Algebra", "Backend", "Frontend"];
+
+roomsArray.forEach(i => {
+  router.get(`/room/${i}`, isUser, (req, res) => {
+    res.render("index/room", { path: "index/room", name: i });
+  })
+})
+
+
 module.exports = router;

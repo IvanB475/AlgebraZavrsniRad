@@ -251,7 +251,7 @@ router.post("/room-register", isUser, (req, res) => {
   }
 });
 
-router.post("/room", isUser, (req, res) => {
+/* router.post("/room", isUser, (req, res) => {
   var room = req.body.room;
   User.findById(req.user._id, (err, user) => {
     if(err) {
@@ -266,7 +266,7 @@ router.post("/room", isUser, (req, res) => {
       }
     }
   })
-});
+}); */
 
 router.post("/newsfeed", isUser, (req, res) => {
   const post = new Post({

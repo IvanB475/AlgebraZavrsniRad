@@ -1,6 +1,9 @@
+/** base of this styling and associated files comes from Maximilian Schwarzmüller's course on udemy **/
+
 * {
   box-sizing: border-box;
 }
+
 
 body {
   padding: 0;
@@ -15,6 +18,10 @@ main {
 
 form {
   display: inline;
+}
+
+h1 {
+  text-align: center;
 }
 
 .centered {
@@ -110,6 +117,7 @@ form {
 }
 
 .grid {
+  margin-top: 3%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -117,7 +125,7 @@ form {
 }
 
 .card {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  box-shadow: 15px 15px 18px rgba(0, 0, 0, 0.26);
 }
 
 .card__header,
@@ -134,13 +142,14 @@ form {
 
 .card__image {
   width: 100%;
-  height: 10rem;
+  height: 20rem;
   text-align: center;
 }
 
 .card__image img {
-  max-width: 100%;
-  max-height: 100%;
+  width: 90%;
+  height: 95%;
+
 }
 
 .card__actions {
@@ -239,4 +248,21 @@ form {
   .user-message {
     width: 30rem;
   }
+}
+
+
+.landing-box {
+  width: 22rem;
+  margin: auto;
+  display: block;
+}
+
+.landing-item {
+  width: 22rem;
+  margin: 1rem;
+}
+
+.room__title {
+  font-size: 1.8rem;
+  text-align: center;
 }

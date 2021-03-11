@@ -115,18 +115,13 @@ io.on("connection", (socket) => {
   });
 
   socket.on("change_username", (data) => {
-    console.log(data);
-
           const { error } = joiSchema.changeUsername.validate(data);
           const valid = error == null;
   
           if(valid) {
             console.log("success");
               socket.username = data.username;
-          } else {
-              const { details } = error;
-              const message = details.map(i => i.message).join(',');
-  
+          } else {  
               console.log("that can't be done");
               socket.username = "wrong input";
           }
