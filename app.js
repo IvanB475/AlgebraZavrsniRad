@@ -11,6 +11,7 @@ const path = require("path");
 const Room = require("./models/room");
 const Post = require("./models/post");
 const multer = require("multer");
+const rateLimit = require("express-rate-limit");
 const { v4: uuidv4 } = require("uuid");
 const joiSchema = require('./middleware/joiSchemas');
 require('dotenv').config();
@@ -83,6 +84,13 @@ app.use((req, res, next) => {
   res.locals.csrfToken = req.csrfToken();
   next();
 });
+
+const limiter = rateLimit({
+  windowMs: 2 * 60 * 1000, 
+  max: 100
+});
+
+app.use(limiter);
 
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
