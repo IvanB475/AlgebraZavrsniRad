@@ -55,15 +55,14 @@ $(function () {
   //Listen on new_message
   socket.on("posts", (data) => {
     console.log("ušao tu");
-    console.log(data.post.postid);
     postlist.prepend(
-      "<h5>" +
-        data.post.username +
-        "</h5> <textarea rows='5' cols='50' readonly>" +
+      '<div class="post" readonly>' +
+       '<h5><img src="https://ptetutorials.com/images/user-profile.png" class="profile_img" width= "25px" height="25px"></img>' + data.post.username +
+        "</h5> <hr>" +
         data.post.post +
-        "</textarea>" +
+        "</div>" +
         `<div class="selector"> <div class="commentlist" id="commentlist${data.postid}">
-    </div>
+  
     </br>
     <selection>
         <input type="hidden" id="username" value='<%=currentUser.username %>'>
@@ -72,6 +71,7 @@ $(function () {
         <input type="text" id='comment'>
         <button id="sendcomment" type="submit" onclick="mySubmit()">Comment!</button> 
     </selection>
+    </div>
 </div>`
     );
 
@@ -87,11 +87,14 @@ $(function () {
     commentlist = "commentlist" + data.postid;
     commentlist = $(`#${commentlist}`);
     console.log(commentlist);
-    commentlist.append(
-      "<em>" +
-        data.comment.username +
-        "</em>" +
-        `<input type='text' class="form-control-plaintext" value= "${data.comment.message}" + readonly></br>`
+    commentlist.prepend(
+        `<div class="comment">
+        <em><img src="https://ptetutorials.com/images/user-profile.png" class="profile_img" width= "20px" height="20px"></img>${data.comment.username}</em>
+         <span class="form-control-plaintext" readonly> ${data.comment.message} </span>
+      </div>
+         <em class="timeSince posted_on">Just now</em>
+      </br>
+      </br>`
     );
   });
 });

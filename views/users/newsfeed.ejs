@@ -10,7 +10,7 @@
     <form action="/newsfeed" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <input type="hidden" name="userid" id="userid" value="<%= currentUser._id %>">
-        <textarea rows="5" cols="50" name="newpost" id="newpost"></textarea>
+        <textarea rows="5" class="post" cols="50" name="newpost" id="newpost"></textarea>
         <button id="send_message">Post!</button> 
     </form>
     <section id="postlist">
@@ -52,13 +52,14 @@
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <input type="hidden" id="postid" value="<%= posts[i].id %>">
             <input type="text" id="comment">
-            <button id="sendcomment" type="submit" onclick="mySubmit()">Comment!</button>
+            <button id="sendcomment" type="submit" onclick="mySubmit()">Comment!</button> 
             <br> 
         </selection>
     </div>
+</div>
         <% } %>
     <% } %>
-</div>
+    </div>
     <script src="calculateTime.js"></script>
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/posts.js"></script>

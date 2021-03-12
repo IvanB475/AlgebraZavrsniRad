@@ -269,6 +269,7 @@ router.post("/room-register", isUser, (req, res) => {
 }); */
 
 router.post("/newsfeed", isUser, (req, res) => {
+  console.log(req.body);
   const post = new Post({
     author: req.user._id,
     username: req.user.username,
@@ -276,6 +277,7 @@ router.post("/newsfeed", isUser, (req, res) => {
   });
   post.save();
   io.getIO().emit("posts", { post: post, postid: post._id });
+  res.redirect('back');
 });
 
 router.post("/privatePost", (req, res) => {
