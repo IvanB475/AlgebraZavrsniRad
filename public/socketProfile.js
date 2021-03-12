@@ -91,7 +91,7 @@ socket.on("callWindowOpened", async (data) => {
   console.log(socket.id);
   console.log(data.socket);
   window.open(
-    "http://18.192.121.29:8080/call/" + data.user,
+    "http://localhost:8080/call/" + data.user,
     "Test window",
     "height=7000,width=15000"
   );
