@@ -23,7 +23,7 @@ h1 {
 div#change_username,
 div#change_color,
 section#input_zone {
-  border: 5px outset #00695c;
+  border: 5px outset #752828;
 }
 
 .button-container {
@@ -65,7 +65,7 @@ div#change_username {
   width: 400px;
   height: 3%;
   display: inline-block;
-  background-color: #00695c;
+  background-color: #752828;
 }
 
 #color {
@@ -79,7 +79,7 @@ div#change_username {
 }
 
 section#chatroom {
-  border: 1px inset #00695c;
+  border: 1px inset #752828;
   height: 65%;
   overflow: auto;
 }
@@ -87,19 +87,18 @@ section#chatroom {
 section#input_zone {
   height: 7%;
   text-align: center;
-  background-color: #00695c;
+  background-color: #752828;
 }
 
 section#input_zone_private {
   width: 85%;
   height: 7%;
   text-align: center;
-  background-color: #00695c;
-  border: 5px outset #00695c;
+  background-color: #752828;
+  border: 5px outset #752828;
 }
 
 .vertical-align {
-    text-align: center;
     margin-bottom: 2%;
 }
 

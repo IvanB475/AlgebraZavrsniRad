@@ -43,17 +43,17 @@ h1 {
 /** Search bar styling from https://codepen.io/quocdat1994/pen/OJLEzEm **/ 
 .search-bar {
     margin-left: 25%;
-    background: #00695c;
+    background: #752828;
     width: 50%;
     height: 40px;
     padding: 0.2rem 0.6rem 0.2rem 0.2rem;  
     box-sizing: border-box;
-    box-shadow: 1px 1px 0 0 #00695c,
-                2px 2px 0 0 #00695c,
-                3px 3px 0 0 #00695c,
-                4px 4px 0 0 #00695c,
-                5px 5px 0 0 #00695c,
-                6px 6px 0 0 #00695c
+    box-shadow: 1px 1px 0 0 #752828,
+                2px 2px 0 0 #752828,
+                3px 3px 0 0 #752828,
+                4px 4px 0 0 #752828,
+                5px 5px 0 0 #752828,
+                6px 6px 0 0 #752828
   }
   
   .search-bar input {
@@ -86,7 +86,7 @@ h1 {
         height: 40px;
         font: inherit;
         color: white;
-        background: #00695c;
+        background: #752828;
         border-radius: 3px;
         cursor: pointer;
   }
