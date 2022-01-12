@@ -238,8 +238,8 @@ io.on("connection", (socket) => {
       message: data.comment,
     };
     Post.findById(data.postid).then((post) => {
-      post.comments.push(comment);
-      post.save();
+      post?.comments.push(comment);
+      post?.save();
     });
     io.emit("comments", { comment: comment, postid: data.postid });
   });
