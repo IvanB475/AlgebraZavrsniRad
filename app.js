@@ -101,7 +101,7 @@ app.use(indexRoutes);
 app.use(usersControllers);
 
 
-const server = app.listen(8080, console.log("server started"));
+const server = app.listen(process.env.PORT, '0.0.0.0');
 const io = require("./socket").init(server);
 io.on("connection", (socket) => {
   socket.username = "Anonymous";
