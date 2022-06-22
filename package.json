@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/IvanB475/AlgebraZavrsniRad#readme",
   "dependencies": {
-    "async": "^3.2.0",
+    "async": "^3.2.2",
     "body-parser": "^1.19.0",
     "crypto": "^1.0.1",
     "csurf": "^1.11.0",
